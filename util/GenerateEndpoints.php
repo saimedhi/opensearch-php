@@ -42,9 +42,9 @@ try {
     printf("ERROR: Host %s is offline\n", Utility::getHost());
     exit(1);
 }
-$version = $serverInfo['version']['number'];
-$buildHash = $serverInfo['version']['build_hash'];
-
+$version = "8.11.2";
+$buildHash = "8.11.2";
+echo "PHP version: $version";
 if (version_compare($version, '7.4.0', '<')) {
     printf("Error: the ES version must be >= 7.4.0\n");
     exit(1);
