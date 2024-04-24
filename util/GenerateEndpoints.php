@@ -117,29 +117,31 @@ echo "Length of \$list_of_dicts array: $length \n\n\n";
 
 // $files = glob(sprintf("https://github.com/opensearch-project/opensearch-api-specification/releases/download/main/opensearch-openapi.yaml"));
 
-// $outputDir = __DIR__ . "/output";
-// if (!file_exists($outputDir)) {
-//     mkdir($outputDir);
-// }
+$outputDir = __DIR__ . "/output";
+if (!file_exists($outputDir)) {
+    mkdir($outputDir);
+}
+echo "outputDir=$outputDir        \n";
+$endpointDir = "$outputDir/Endpoints/";
+if (!file_exists($endpointDir)) {
+    mkdir($endpointDir);
+}
+echo "endpointDir=$endpointDir        \n";
 
-// $endpointDir = "$outputDir/Endpoints/";
-// if (!file_exists($endpointDir)) {
-//     mkdir($endpointDir);
-// }
+$countEndpoint = 0;
+$namespaces = [];
 
-// $countEndpoint = 0;
-// $namespaces = [];
+// Generate endpoints
+foreach ($list_of_dicts as $file) {
+    echo "file=$file        \n";
+    // if (stripos($file, 'xpack') !== false) {
+    //     continue;
+    // }
 
-// // Generate endpoints
-// foreach ($files as $file) {
-//     if (stripos($file, 'xpack') !== false) {
-//         continue;
-//     }
-
-//     if (empty($file) || (basename($file) === '_common.json')) {
-//         continue;
-//     }
-//     printf("Generating %s...", basename($file));
+    // if (empty($file) || (basename($file) === '_common.json')) {
+    //     continue;
+    // }
+    printf("Generating %s...", basename($file));
 
 //     $endpoint = new Endpoint($file, file_get_contents($file), $version, $buildHash);
 
@@ -161,7 +163,7 @@ echo "Length of \$list_of_dicts array: $length \n\n\n";
 
 //     $namespaces[$endpoint->namespace][] = $endpoint;
 //     $countEndpoint++;
-// }
+}
 
 // // Generate namespaces
 // $namespaceDir = "$outputDir/Namespaces/";
