@@ -107,15 +107,12 @@ foreach ($data["paths"] as $path => $pathDetails) {
 print_r($list_of_dicts);
 
 $length = count($list_of_dicts);
+
+$variable_type = gettype($list_of_dicts);
+echo "type of list_of_dicts: $variable_type \n\n\n";
+
 echo "Length of \$list_of_dicts array: $length \n\n\n";
 //var_dump($list_of_dicts);
-
-// Now $list_of_dicts contains the required data
-// Parse YAML content into PHP data structure
-//$data = yaml_parse($yamlContent);
-
-
-// $files = glob(sprintf("https://github.com/opensearch-project/opensearch-api-specification/releases/download/main/opensearch-openapi.yaml"));
 
 $outputDir = __DIR__ . "/output";
 if (!file_exists($outputDir)) {
@@ -131,9 +128,71 @@ echo "endpointDir=$endpointDir        \n";
 $countEndpoint = 0;
 $namespaces = [];
 
+echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n";
 // Generate endpoints
-foreach ($list_of_dicts as $file) {
-    echo "file=$file        \n";
+// foreach ($list_of_dicts as $key) {
+//     foreach ($key as $key1=>$value1) {
+//         echo("key1=$key1\n");
+//         $type_value1=gettype($value1);
+//         if (is_array($value1)) {
+//             foreach ($value1 as $key2 => $value2) {
+//                 echo " key2= $key2, value2=$value2\n";
+//             }
+//         } else {
+//             echo "value=$value1\n";
+//         }
+//         echo "################\n\n";
+//     }
+//     break;
+
+// }
+echo "+++++++++++++++++++++++++++++++++++++\n\n";
+foreach ($list_of_dicts as $endpoint) {
+    if (array_key_exists("parameters", $endpoint)) {
+        echo "parameters exists\n";
+        $params = [];
+        $parts = [];
+        foreach ($endpoint["parameters"] as $param_ref) {
+            echo $param_ref["$"."ref"];
+            echo "..................\n";
+            $param_ref_value = substr($param_ref["$"."ref"], strrpos($param_ref["$"."ref"], '/') + 1);
+            echo "$param_ref_value\n";
+            echo "..................\n";
+            $param = $data["components"]["parameters"][$param_ref_value];
+            if (isset($param["schema"]) && isset($param["schema"]["$"."ref"])) {
+                $schema_path_ref = substr($param["schema"]["$"."ref"], strrpos($param["schema"]["$"."ref"], '/') + 1);
+                $param["schema"] = $data["components"]["schemas"][$schema_path_ref];
+                $params[] = $param;
+            } else {
+                $params[] = $param;
+            }
+        }
+    }
+
+
+
+    // echo " key=$key\n";
+    // foreach ($key as $key1=>$value1) {
+    //     echo " key1= $key1\n";
+    //     echo " key1= $key1, value1=$value1\n";
+    // }
+    break;
+}
+
+
+
+
+
+
+
+
+
+    // echo "key printed\n";
+    // echo(gettype($key));
+    // print_r($key);
+    // echo "----------------------";
+    // break;
+    // echo "file=$file   \n file_value=$file_value     \n";
     // if (stripos($file, 'xpack') !== false) {
     //     continue;
     // }
@@ -141,7 +200,11 @@ foreach ($list_of_dicts as $file) {
     // if (empty($file) || (basename($file) === '_common.json')) {
     //     continue;
     // }
-    printf("Generating %s...", basename($file));
+    // printf("Generating %s...", basename($file));
+
+
+
+
 
 //     $endpoint = new Endpoint($file, file_get_contents($file), $version, $buildHash);
 
@@ -163,7 +226,7 @@ foreach ($list_of_dicts as $file) {
 
 //     $namespaces[$endpoint->namespace][] = $endpoint;
 //     $countEndpoint++;
-}
+
 
 // // Generate namespaces
 // $namespaceDir = "$outputDir/Namespaces/";
