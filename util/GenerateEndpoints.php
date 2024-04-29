@@ -104,7 +104,7 @@ foreach ($data["paths"] as $path => $pathDetails) {
         //     }
     }
 }
-print_r($list_of_dicts);
+// print_r($list_of_dicts);
 
 $length = count($list_of_dicts);
 
@@ -129,23 +129,6 @@ $countEndpoint = 0;
 $namespaces = [];
 
 echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n";
-// Generate endpoints
-// foreach ($list_of_dicts as $key) {
-//     foreach ($key as $key1=>$value1) {
-//         echo("key1=$key1\n");
-//         $type_value1=gettype($value1);
-//         if (is_array($value1)) {
-//             foreach ($value1 as $key2 => $value2) {
-//                 echo " key2= $key2, value2=$value2\n";
-//             }
-//         } else {
-//             echo "value=$value1\n";
-//         }
-//         echo "################\n\n";
-//     }
-//     break;
-
-// }
 echo "+++++++++++++++++++++++++++++++++++++\n\n";
 foreach ($list_of_dicts as $endpoint) {
     if (array_key_exists("parameters", $endpoint)) {
@@ -181,30 +164,19 @@ foreach ($list_of_dicts as $endpoint) {
 
 
 
+echo "+++++++++++++++++++++++++++++++++++++\n\n";
+// var_dump($files[0]);
 
+// // Generate endpoints
+// foreach ($files as $file) {
+//     if (stripos($file, 'xpack') !== false) {
+//         continue;
+//     }
 
-
-
-
-
-    // echo "key printed\n";
-    // echo(gettype($key));
-    // print_r($key);
-    // echo "----------------------";
-    // break;
-    // echo "file=$file   \n file_value=$file_value     \n";
-    // if (stripos($file, 'xpack') !== false) {
-    //     continue;
-    // }
-
-    // if (empty($file) || (basename($file) === '_common.json')) {
-    //     continue;
-    // }
-    // printf("Generating %s...", basename($file));
-
-
-
-
+//     if (empty($file) || (basename($file) === '_common.json')) {
+//         continue;
+//     }
+//     printf("Generating %s...", basename($file));
 
 //     $endpoint = new Endpoint($file, file_get_contents($file), $version, $buildHash);
 
@@ -226,7 +198,7 @@ foreach ($list_of_dicts as $endpoint) {
 
 //     $namespaces[$endpoint->namespace][] = $endpoint;
 //     $countEndpoint++;
-
+// }
 
 // // Generate namespaces
 // $namespaceDir = "$outputDir/Namespaces/";
