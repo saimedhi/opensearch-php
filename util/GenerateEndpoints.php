@@ -89,8 +89,8 @@ foreach ($data["paths"] as $path => $pathDetails) {
     echo ".....\n";
 
     foreach ($pathDetails as $method => $methodDetails) {
-        echo "method=$method        \n";
-        print_r($methodDetails);
+        // echo "method=$method        \n";
+        // print_r($methodDetails);
         // Check if the key exists and its value equals "nodes.hot_threads"
         // if (isset($methodDetails["x-operation-group"]) && $methodDetails["x-operation-group"] === "nodes.hot_threads") {
         //         // Check if the "deprecated" key is not present
@@ -109,38 +109,43 @@ foreach ($data["paths"] as $path => $pathDetails) {
 $length = count($list_of_dicts);
 
 $variable_type = gettype($list_of_dicts);
-echo "type of list_of_dicts: $variable_type \n\n\n";
+// echo "type of list_of_dicts: $variable_type \n\n\n";
 
-echo "Length of \$list_of_dicts array: $length \n\n\n";
+// echo "Length of \$list_of_dicts array: $length \n\n\n";
 //var_dump($list_of_dicts);
 
 $outputDir = __DIR__ . "/output";
 if (!file_exists($outputDir)) {
     mkdir($outputDir);
 }
-echo "outputDir=$outputDir        \n";
+// echo "outputDir=$outputDir        \n";
 $endpointDir = "$outputDir/Endpoints/";
 if (!file_exists($endpointDir)) {
     mkdir($endpointDir);
 }
-echo "endpointDir=$endpointDir        \n";
+// echo "endpointDir=$endpointDir\n";
 
 $countEndpoint = 0;
 $namespaces = [];
 
 echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n";
 echo "+++++++++++++++++++++++++++++++++++++\n\n";
+$count = 0;
 foreach ($list_of_dicts as $endpoint) {
+    // Update parameters  in each endpoint
     if (array_key_exists("parameters", $endpoint)) {
         echo "parameters exists\n";
         $params = [];
         $parts = [];
+        echo "\n111..................\n";
+        // Iterate over the list of parameters and update them
         foreach ($endpoint["parameters"] as $param_ref) {
+            echo "\n222..................\n";
             echo $param_ref["$"."ref"];
-            echo "..................\n";
+            echo "\n333..................\n";
             $param_ref_value = substr($param_ref["$"."ref"], strrpos($param_ref["$"."ref"], '/') + 1);
             echo "$param_ref_value\n";
-            echo "..................\n";
+            echo "\n444..................\n";
             $param = $data["components"]["parameters"][$param_ref_value];
             if (isset($param["schema"]) && isset($param["schema"]["$"."ref"])) {
                 $schema_path_ref = substr($param["schema"]["$"."ref"], strrpos($param["schema"]["$"."ref"], '/') + 1);
@@ -150,16 +155,115 @@ foreach ($list_of_dicts as $endpoint) {
                 $params[] = $param;
             }
         }
+        echo "params0=\n";
+        var_dump($params);
+
+        // Iterate over the list of updated parameters to separate "parts" from "params"
+        $params_copy = $params;
+
+        foreach ($params_copy as $key => $param) {
+            if ($param["in"] === "path") {
+                $parts[] = $param;
+                unset($params[$key]);
+            }
+        }
+
+
+        echo "params1=\n";
+        var_dump($params);
+        echo "parts1=\n";
+        var_dump($parts);
+        
+
+        // Convert "params" and "parts" into the structure required for generator.
+        $params_new = [];
+        $parts_new = [];
+
+        foreach ($params as $param) {
+            $param_dict = [];
+
+            if (isset($param['description'])) {
+                $param_dict['description'] = str_replace("\n", "", $param['description']);
+            }
+
+            if (isset($param['schema']['type'])) {
+                $param_dict['type'] = $param['schema']['type'];
+            }
+
+            if (isset($param['schema']['default'])) {
+                $param_dict['default'] = $param['schema']['default'];
+            }
+
+            if (isset($param['schema']['enum'])) {
+                $param_dict['type'] = 'enum';
+                $param_dict['options'] = $param['schema']['enum'];
+            }
+
+            if (isset($param['deprecated'])) {
+                $param_dict['deprecated'] = $param['deprecated'];
+            }
+
+            if (isset($param['x-deprecation-message'])) {
+                $param_dict['deprecation_message'] = $param['x-deprecation-message'];
+            }
+
+            $params_new[$param['name']] = $param_dict;
+        }
+
+        // Remove deprecated "type" from "params_new"
+        if ($endpoint['x-operation-group'] !== 'nodes.hot_threads' && isset($params_new['type'])) {
+            unset($params_new['type']);
+        }
+
+        // Remove "ensure_node_commissioned" if necessary
+        if ($endpoint['x-operation-group'] === 'cluster.health' && isset($params_new['ensure_node_commissioned'])) {
+            unset($params_new['ensure_node_commissioned']);
+        }
+
+        // Update the endpoint with "params" if not empty
+        if (!empty($params_new)) {
+            $endpoint['params'] = $params_new;
+        }
+
+        // Process "parts" in the same manner
+        foreach ($parts as $part) {
+            $parts_dict = [];
+
+            if (isset($part['schema']['type'])) {
+                $parts_dict['type'] = $part['schema']['type'];
+            }
+
+            if (isset($part['description'])) {
+                $parts_dict['description'] = str_replace("\n", " ", $part['description']);
+            }
+
+            if (isset($part['schema']['x-enum-options'])) {
+                $parts_dict['options'] = $part['schema']['x-enum-options'];
+            }
+
+            if (isset($part['deprecated'])) {
+                $parts_dict['deprecated'] = $part['deprecated'];
+            }
+
+            $parts_new[$part['name']] = $parts_dict;
+        }
+
+        // Update the endpoint with "parts" if not empty
+        if (!empty($parts_new)) {
+            $endpoint['parts'] = $parts_new;
+        }
+        echo "..........................................\n";
+        echo "endpoint=\n";
+        var_dump($endpoint);
     }
 
-
-
-    // echo " key=$key\n";
-    // foreach ($key as $key1=>$value1) {
-    //     echo " key1= $key1\n";
-    //     echo " key1= $key1, value1=$value1\n";
-    // }
-    break;
+    $count = $count + 1;
+    if ($count == 3) {
+        break;
+    }
+    echo "+++++++++++++++++++++++++++++++++++++\n\n";
+    echo "+++++++++++++++++++++++++++++++++++++\n\n";
+    echo "+++++++++++++++++++++++++++++++++++++\n\n";
 }
 
 
