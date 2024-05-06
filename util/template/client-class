@@ -23,7 +23,7 @@ use OpenSearch\Namespaces\BooleanRequestWrapper;
  */
 class Client
 {
-    const VERSION = ':version';
+    const VERSION = '2.3.0';
 
     /**
      * @var Transport

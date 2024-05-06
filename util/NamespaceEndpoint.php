@@ -35,14 +35,10 @@ class NamespaceEndpoint
     protected $name;
     protected $endpoints = [];
     protected $endpointNames = [];
-    protected $version;
-    protected $buildhash;
 
-    public function __construct(string $name, string $version, string $buildhash)
+    public function __construct(string $name)
     {
         $this->name = $name;
-        $this->version = $version;
-        $this->buildhash = $buildhash;
     }
 
     public function renderClass(): string
@@ -67,8 +63,6 @@ class NamespaceEndpoint
                 break;
         }
         $class = str_replace(':endpoints', $endpoints, $class);
-        $class = str_replace(':version', $this->version, $class);
-        $class = str_replace(':buildhash', $this->buildhash, $class);
 
         return $class;
     }

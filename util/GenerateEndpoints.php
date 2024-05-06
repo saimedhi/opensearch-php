@@ -270,11 +270,11 @@ foreach ($list_of_dicts as $index => $endpoint) {
     // echo "+++++++++++++++++++++++++++++++++++++\n\n";
     // echo "+++++++++++++++++++++++++++++++++++++\n\n";
 }
-echo "+++++++++++++++++++++++++++++++++++++\n\n";
-echo "list_of_dicts[20]=\n";
-var_dump($list_of_dicts[20]);
+// echo "+++++++++++++++++++++++++++++++++++++\n\n";
+// echo "list_of_dicts[20]=\n";
+// var_dump($list_of_dicts[20]);
 
-echo "+++++++++++++++++++++++++++++++++++++\n\n";
+// echo "+++++++++++++++++++++++++++++++++++++\n\n";
 $files = [];
 // Sort the input array by the value of the "x-operation-group" key
 usort($list_of_dicts, function($a, $b) {
@@ -430,9 +430,9 @@ foreach ($grouped as $key => $value) {
 
 
 
-echo "++++++files+++++++++++++++++++++++++++++++\n\n";
-var_dump($files);
-echo "+++++++++++++++++++++++++++++++++++++\n\n";
+// echo "++++++files+++++++++++++++++++++++++++++++\n\n";
+// var_dump($files);
+// echo "+++++++++++++++++++++++++++++++++++++\n\n";
 
 // Generate endpoints
 foreach ($files as $entry) {
@@ -450,14 +450,20 @@ foreach ($files as $entry) {
 
         // Print generating message
         printf("Generating %s...", $key);
+        // echo "\n";
+        // var_dump($api);
+        // echo "\n";
 
         // Convert the $api array to a JSON string
-        $api_json = json_encode($api);
+        $entry_json = json_encode($entry);
         
-        echo "Generating start";
+
         // Create a new endpoint with the key as the filename and the api_json as content
-        $endpoint = new Endpoint($key . '.json', $api_json);
-        echo "Generating continue 1";
+        $print_key = $key . '.json';
+        echo "print_key = $print_key\n";
+        echo "entry_json = $entry_json\n";
+        $endpoint = new Endpoint($key . '.json', $entry_json);
+        echo "Generating continue 1\n";
 
         // Define the directory where the endpoint will be stored
         $dir = $endpointDir . NamespaceEndpoint::normalizeName($endpoint->namespace);
@@ -498,7 +504,7 @@ $clientFile = "$outputDir/Client.php";
 
 foreach ($namespaces as $name => $endpoints) {
     if (empty($name)) {
-        $clientEndpoint = new ClientEndpoint(array_keys($namespaces), $version, $buildHash);
+        $clientEndpoint = new ClientEndpoint(array_keys($namespaces));
         foreach ($endpoints as $ep) {
             $clientEndpoint->addEndpoint($ep);
         }
@@ -513,7 +519,7 @@ foreach ($namespaces as $name => $endpoints) {
         $countNamespace++;
         continue;
     }
-    $namespace = new NamespaceEndpoint($name, $version, $buildHash);
+    $namespace = new NamespaceEndpoint($name);
     foreach ($endpoints as $ep) {
         $namespace->addEndpoint($ep);
     }

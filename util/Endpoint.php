@@ -487,7 +487,7 @@ class Endpoint
                 $part,
                 str_repeat(' ', $space - strlen($part)),
                 $part === 'type' || (isset($values['deprecated']) && $values['deprecated']) ? 'DEPRECATED ' : '',
-                $values['type'],
+                $values['type']?? 'any',
                 $values['description'] ?? '',
                 in_array($part, $this->requiredParts) ? ' (Required)' : ''
             );
@@ -510,7 +510,7 @@ class Endpoint
                 "     * \$params['%s']%s = (%s) %s%s%s%s\n",
                 $param,
                 str_repeat(' ', $space - strlen($param)),
-                $values['type'],
+                $values['type'] ?? 'any',
                 $values['description'] ?? '',
                 isset($values['required']) && $values['required'] ? ' (Required)' : '',
                 isset($values['options']) ? sprintf(" (Options = %s)", implode(',', $values['options'])) : '',
