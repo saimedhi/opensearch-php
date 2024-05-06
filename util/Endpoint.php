@@ -58,8 +58,6 @@ class Endpoint
     public $name;
     public $apiName;
     protected $content;
-    protected $version;
-    protected $buildhash;
     protected $parts = [];
     protected $requiredParts = [];
     protected $useNamespace = [];
@@ -69,8 +67,6 @@ class Endpoint
     public function __construct(
         string $fileName,
         string $content,
-        string $version,
-        string $buildhash
     ) {
         $this->apiName = basename($fileName, '.json');
         $parts = explode('.', $this->apiName);
@@ -95,8 +91,6 @@ class Endpoint
             ));
         }
         $this->content = $this->content[$this->apiName];
-        $this->version = $version;
-        $this->buildhash = $buildhash;
 
         $this->parts = $this->getPartsFromContent($this->content);
         $this->requiredParts = $this->getRequiredParts($this->content);
@@ -194,8 +188,6 @@ class Endpoint
         }
         $class = str_replace(':set-parts', $parts, $class);
         $class = str_replace(':endpoint', $this->getClassName(), $class);
-        $class = str_replace(':version', $this->version, $class);
-        $class = str_replace(':buildhash', $this->buildhash, $class);
         $class = str_replace(':use-namespace', $this->getNamespaces(), $class);
         $class = str_replace(':properties', $this->getProperties(), $class);
 
