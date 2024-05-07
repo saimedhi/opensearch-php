@@ -487,7 +487,7 @@ class Endpoint
                 $part,
                 str_repeat(' ', $space - strlen($part)),
                 $part === 'type' || (isset($values['deprecated']) && $values['deprecated']) ? 'DEPRECATED ' : '',
-                $values['type']?? 'any',
+                $values['type'] ?? 'any',
                 $values['description'] ?? '',
                 in_array($part, $this->requiredParts) ? ' (Required)' : ''
             );

@@ -173,7 +173,7 @@ foreach ($list_of_dicts as $index => $endpoint) {
         // var_dump($params);
         // echo "parts1=\n";
         // var_dump($parts);
-        
+
 
         // Convert "params" and "parts" into the structure required for generator.
         $params_new = [];
@@ -277,7 +277,7 @@ foreach ($list_of_dicts as $index => $endpoint) {
 // echo "+++++++++++++++++++++++++++++++++++++\n\n";
 $files = [];
 // Sort the input array by the value of the "x-operation-group" key
-usort($list_of_dicts, function($a, $b) {
+usort($list_of_dicts, function ($a, $b) {
     return $a['x-operation-group'] <=> $b['x-operation-group'];
 });
 // echo "..........................................\n";
@@ -323,7 +323,7 @@ foreach ($grouped as $key => $value) {
 
         $methods = [];
         $parts_final = [];
-        
+
         foreach ($path_dicts as $method_dict) {
             $methods[] = strtoupper($method_dict['method']);
             // echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n";
@@ -363,11 +363,11 @@ foreach ($grouped as $key => $value) {
                 $requestbody_ref = explode('/', $method_dict['requestBody']['$ref']);
                 $requestbody_ref = end($requestbody_ref);
                 $body = ['required' => false];
-            
+
                 if (isset($data['components']['requestBodies'][$requestbody_ref]['required'])) {
                     $body['required'] = $data['components']['requestBodies'][$requestbody_ref]['required'];
                 }
-            
+
                 // Check for content type "application/x-ndjson"
                 if (isset($data['components']['requestBodies'][$requestbody_ref]['content']['application/x-ndjson'])) {
                     $requestbody_schema = $data['components']['requestBodies'][$requestbody_ref]['content']['application/x-ndjson']['schema'];
@@ -376,11 +376,11 @@ foreach ($grouped as $key => $value) {
                     // Otherwise, default to "application/json"
                     $requestbody_schema = $data['components']['requestBodies'][$requestbody_ref]['content']['application/json']['schema'];
                 }
-            
+
                 if (isset($requestbody_schema['description'])) {
                     $body['description'] = $requestbody_schema['description'];
                 }
-            
+
                 $api['body'] = $body;
             }
 
@@ -417,7 +417,7 @@ foreach ($grouped as $key => $value) {
 
     // Update api with paths information
     $api['url'] = ['paths' => $paths];
-    
+
     if ($all_paths_have_deprecation && isset($x_deprecation_message)) {
         $api['deprecation_message'] = $x_deprecation_message;
     }
@@ -456,7 +456,7 @@ foreach ($files as $entry) {
 
         // Convert the $api array to a JSON string
         $entry_json = json_encode($entry);
-        
+
 
         // Create a new endpoint with the key as the filename and the api_json as content
         $print_key = $key . '.json';
@@ -473,7 +473,7 @@ foreach ($files as $entry) {
 
         // Define the output file path based on the key
         $outputFile = sprintf("%s/%s.php", $dir, $endpoint->getClassName());
-        
+
         // Write the endpoint to the output file
         file_put_contents($outputFile, $endpoint->renderClass());
 
