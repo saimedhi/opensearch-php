@@ -190,7 +190,41 @@ class Endpoint
         $class = str_replace(':endpoint', $this->getClassName(), $class);
         $class = str_replace(':use-namespace', $this->getNamespaces(), $class);
         $class = str_replace(':properties', $this->getProperties(), $class);
+        // Determine the file path
+        $currentDir = dirname(__FILE__); // Get the current working directory
+        $baseDir = dirname($currentDir); // Go up one directory to get the base directory
+        $EndpointName = $this->getClassName();
+        echo "namespaceName= $this->namespace , EndpointName= $EndpointName";
+        if (!empty($this->namespace)) {
+            $filePath = $baseDir . "/src/OpenSearch/Endpoints/$this->namespace/$EndpointName.php";
+        } else {
+            $filePath = $baseDir . "/src/OpenSearch/Endpoints/$EndpointName.php";
+        }
+        // Check if the file exists
+        if (file_exists($filePath)) {
+            // Read the file contents
+            $content = file_get_contents($filePath);
+            
+            // Check if "Copyright OpenSearch" is present in the file
+            if (strpos($content, 'Copyright OpenSearch') !== false) {
+                echo "File contain 'Copyright OpenSearch'.";
+                // Define the regular expression to find the first multi-line comment block
+                $pattern = '/\/\*\*.*?\*\//s';
+                
+                // Find the first occurrence of the comment block
+                if (preg_match($pattern, $content, $matches)) {
+                    // Output the license header (first match)
+                    $class = str_replace('declare(strict_types = 1);', 'declare(strict_types = 1);' . PHP_EOL . PHP_EOL . $matches[0], $class);
 
+                } else {
+                    echo "No multi-line comment block found.";
+                }
+            } else {
+                echo "File does not contain 'Copyright OpenSearch'.";
+            }
+        } else {
+            echo "File not found: $filePath";
+        }
         return str_replace(':apiname', $this->apiName, $class);
     }
 
@@ -514,7 +548,7 @@ class Endpoint
                 $values['description'] ?? '',
                 isset($values['required']) && $values['required'] ? ' (Required)' : '',
                 isset($values['options']) ? sprintf(" (Options = %s)", implode(',', $values['options'])) : '',
-                isset($values['default']) ? sprintf(" (Default = %s)", $values['type'] === 'boolean' ? ($values['default'] ? 'true' : 'false') : (is_array($values['default']) ? implode(',', $values['default']) : $values['default'])) : ''
+                isset($values['default']) ? sprintf(" (Default = %s)", $values['type'] ?? 'any' === 'boolean' ? ($values['default'] ? 'true' : 'false') : (is_array($values['default']) ? implode(',', $values['default']) : $values['default'])) : ''
             );
         }
         return $result;

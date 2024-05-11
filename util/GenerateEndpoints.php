@@ -29,6 +29,7 @@ use OpenSearch\Tests\Utility;
 use Symfony\Component\Yaml\Yaml;
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
+require_once dirname(__DIR__) . '/util/license_header.php';
 
 
 // try {
@@ -524,10 +525,12 @@ foreach ($namespaces as $name => $endpoints) {
         $namespace->addEndpoint($ep);
     }
     $namespaceFile = $namespaceDir . $namespace->getNamespaceName() . 'Namespace.php';
+
     file_put_contents(
         $namespaceFile,
         $namespace->renderClass()
     );
+
     if (!isValidPhpSyntax($namespaceFile)) {
         printf("Error: syntax error in %s\n", $namespaceFile);
         exit(1);
@@ -535,10 +538,13 @@ foreach ($namespaces as $name => $endpoints) {
     $countNamespace++;
 }
 
+
 $destDir = __DIR__ . "/../src/OpenSearch";
 
 printf("Copying the generated files to %s\n", $destDir);
 cleanFolders();
+fix_license_header($outputDir . "/Namespaces");
+fix_license_header($outputDir . "/Endpoints");
 moveSubFolder($outputDir . "/Endpoints", $destDir . "/Endpoints");
 moveSubFolder($outputDir . "/Namespaces", $destDir . "/Namespaces");
 rename($outputDir . "/Client.php", $destDir . "/Client.php");

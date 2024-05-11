@@ -47,7 +47,39 @@ class NamespaceEndpoint
             throw new Exception("No endpoints has been added. I cannot render the class");
         }
         $class = file_get_contents(static::NAMESPACE_CLASS_TEMPLATE);
-        $class = str_replace(':namespace', $this->getNamespaceName() . 'Namespace', $class);
+        $namespaceName = $this->getNamespaceName(). 'Namespace';
+        $class = str_replace(':namespace', $namespaceName, $class);
+
+        // Determine the file path
+        $currentDir = dirname(__FILE__); // Get the current working directory
+        $baseDir = dirname($currentDir); // Go up one directory to get the base directory
+        $filePath = $baseDir . "/src/OpenSearch/Namespaces/$namespaceName.php";
+
+        // Check if the file exists
+        if (file_exists($filePath)) {
+            // Read the file contents
+            $content = file_get_contents($filePath);
+            
+            // Check if "Copyright OpenSearch" is present in the file
+            if (strpos($content, 'Copyright OpenSearch') !== false) {
+                echo "File contain 'Copyright OpenSearch'.";
+                // Define the regular expression to find the first multi-line comment block
+                $pattern = '/\/\*\*.*?\*\//s';
+                
+                // Find the first occurrence of the comment block
+                if (preg_match($pattern, $content, $matches)) {
+                    // Output the license header (first match)
+                    $class = str_replace('declare(strict_types = 1);', 'declare(strict_types = 1);' . PHP_EOL . PHP_EOL . $matches[0], $class);
+
+                } else {
+                    echo "No multi-line comment block found.";
+                }
+            } else {
+                echo " \n $filePath File does not contain 'Copyright OpenSearch'. \n";
+            }
+        } else {
+            echo "File not found: $filePath";
+        }
 
         $endpoints = '';
         foreach ($this->endpoints as $endpoint) {
