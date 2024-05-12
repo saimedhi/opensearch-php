@@ -204,17 +204,17 @@ class Endpoint
         if (file_exists($filePath)) {
             // Read the file contents
             $content = file_get_contents($filePath);
-            
+
             // Check if "Copyright OpenSearch" is present in the file
             if (strpos($content, 'Copyright OpenSearch') !== false) {
                 echo "File contain 'Copyright OpenSearch'.";
                 // Define the regular expression to find the first multi-line comment block
                 $pattern = '/\/\*\*.*?\*\//s';
-                
+
                 // Find the first occurrence of the comment block
                 if (preg_match($pattern, $content, $matches)) {
                     // Output the license header (first match)
-                    $class = str_replace('declare(strict_types = 1);', 'declare(strict_types = 1);' . PHP_EOL . PHP_EOL . $matches[0], $class);
+                    $class = str_replace('declare(strict_types=1);', 'declare(strict_types=1);' . PHP_EOL . PHP_EOL . $matches[0], $class);
 
                 } else {
                     echo "No multi-line comment block found.";

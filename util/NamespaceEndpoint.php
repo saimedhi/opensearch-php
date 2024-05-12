@@ -59,17 +59,17 @@ class NamespaceEndpoint
         if (file_exists($filePath)) {
             // Read the file contents
             $content = file_get_contents($filePath);
-            
+
             // Check if "Copyright OpenSearch" is present in the file
             if (strpos($content, 'Copyright OpenSearch') !== false) {
                 echo "File contain 'Copyright OpenSearch'.";
                 // Define the regular expression to find the first multi-line comment block
                 $pattern = '/\/\*\*.*?\*\//s';
-                
+
                 // Find the first occurrence of the comment block
                 if (preg_match($pattern, $content, $matches)) {
                     // Output the license header (first match)
-                    $class = str_replace('declare(strict_types = 1);', 'declare(strict_types = 1);' . PHP_EOL . PHP_EOL . $matches[0], $class);
+                    $class = str_replace('declare(strict_types=1);', 'declare(strict_types=1);' . PHP_EOL . PHP_EOL . $matches[0], $class);
 
                 } else {
                     echo "No multi-line comment block found.";
@@ -92,6 +92,7 @@ class NamespaceEndpoint
                 break;
             case 'tasks':
                 $endpoints .= $this->tasksListProxy();
+                // echo "task_namespace_endpoints =$endpoints";
                 break;
         }
         $class = str_replace(':endpoints', $endpoints, $class);
@@ -120,7 +121,12 @@ class NamespaceEndpoint
             ? self::ENDPOINT_FUNCTION_BOOL_TEMPLATE
             : self::ENDPOINT_FUNCTION_TEMPLATE
         );
-
+        if ($endpoint->namespace === 'tasks') {
+            // Print the result of $endpoint->renderDocParams() only for "TasksNamespace"
+            echo "**************";
+            echo $endpoint->renderDocParams();
+            echo "**************";
+        }
         $code = str_replace(':apidoc', $endpoint->renderDocParams(), $code);
         $code = str_replace(':endpoint', $this->getEndpointName($endpoint->name), $code);
 
