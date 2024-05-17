@@ -27,6 +27,7 @@ class Health extends AbstractEndpoint
 {
     public function getURI(): string
     {
+
         return "/_cat/health";
     }
 
@@ -39,7 +40,12 @@ class Health extends AbstractEndpoint
             's',
             'time',
             'ts',
-            'v'
+            'v',
+            'pretty',
+            'human',
+            'error_trace',
+            'source',
+            'filter_path'
         ];
     }
 

@@ -27,6 +27,7 @@ class Help extends AbstractEndpoint
 {
     public function getURI(): string
     {
+
         return "/_cat";
     }
 
@@ -34,7 +35,12 @@ class Help extends AbstractEndpoint
     {
         return [
             'help',
-            's'
+            's',
+            'pretty',
+            'human',
+            'error_trace',
+            'source',
+            'filter_path'
         ];
     }
 

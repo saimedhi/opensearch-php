@@ -27,13 +27,18 @@ class GetScriptContext extends AbstractEndpoint
 {
     public function getURI(): string
     {
+
         return "/_script_context";
     }
 
     public function getParamWhitelist(): array
     {
         return [
-
+            'pretty',
+            'human',
+            'error_trace',
+            'source',
+            'filter_path'
         ];
     }
 

@@ -27,6 +27,7 @@ class PostVotingConfigExclusions extends AbstractEndpoint
 {
     public function getURI(): string
     {
+
         return "/_cluster/voting_config_exclusions";
     }
 
@@ -35,7 +36,12 @@ class PostVotingConfigExclusions extends AbstractEndpoint
         return [
             'node_ids',
             'node_names',
-            'timeout'
+            'timeout',
+            'pretty',
+            'human',
+            'error_trace',
+            'source',
+            'filter_path'
         ];
     }
 

@@ -27,6 +27,7 @@ class Reindex extends AbstractEndpoint
 {
     public function getURI(): string
     {
+
         return "/_reindex";
     }
 
@@ -40,7 +41,12 @@ class Reindex extends AbstractEndpoint
             'requests_per_second',
             'scroll',
             'slices',
-            'max_docs'
+            'max_docs',
+            'pretty',
+            'human',
+            'error_trace',
+            'source',
+            'filter_path'
         ];
     }
 

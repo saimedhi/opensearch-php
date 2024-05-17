@@ -27,13 +27,18 @@ class GetScriptLanguages extends AbstractEndpoint
 {
     public function getURI(): string
     {
+
         return "/_script_language";
     }
 
     public function getParamWhitelist(): array
     {
         return [
-
+            'pretty',
+            'human',
+            'error_trace',
+            'source',
+            'filter_path'
         ];
     }
 

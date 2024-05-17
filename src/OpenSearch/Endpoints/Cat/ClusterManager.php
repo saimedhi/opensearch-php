@@ -27,6 +27,7 @@ class ClusterManager extends AbstractEndpoint
 {
     public function getURI(): string
     {
+
         return "/_cat/cluster_manager";
     }
 
@@ -35,11 +36,17 @@ class ClusterManager extends AbstractEndpoint
         return [
             'format',
             'local',
+            'master_timeout',
             'cluster_manager_timeout',
             'h',
             'help',
             's',
-            'v'
+            'v',
+            'pretty',
+            'human',
+            'error_trace',
+            'source',
+            'filter_path'
         ];
     }
 
