@@ -145,7 +145,13 @@ class NamespaceEndpoint
             $param = str_replace(':param', 'body', file_get_contents(self::SET_PARAM_TEMPLATE));
             $setParams .= str_replace(':Param', 'Body', $param);
         }
-        $code = str_replace(':extract', $extract, $code);
+        if (!empty($extract)) {
+            // Only include :extract if $extract is not empty
+            $code = str_replace(':extract', $extract, $code);
+        } else {
+            // Remove the line containing :extract if $extract is empty
+            $code = str_replace("\n" . ':extract', '', $code);
+        }
         $code = str_replace(':setparam', $setParams, $code);
 
         if (empty($endpoint->namespace)) {

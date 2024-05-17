@@ -232,7 +232,19 @@ foreach ($list_of_dicts as $index => $endpoint) {
             $parts_dict = [];
 
             if (isset($part['schema']['type'])) {
+                // If 'schema' has 'type', add it to the parts_dict array
                 $parts_dict['type'] = $part['schema']['type'];
+            } elseif (isset($part['schema']['oneOf'])) {
+                // If 'type' is not present but 'oneOf' is, iterate through each item in 'oneOf'
+                foreach ($part['schema']['oneOf'] as $item) {
+                    // Check if 'type' key is present in the item
+                    if (isset($item['type'])) {
+                        // Assign the type to $parts_dict['type']
+                        $parts_dict['type'] = $item['type'];
+                        // Exit the loop after assigning the first type found
+                        break;
+                    }
+                }
             }
 
             if (isset($part['description'])) {
@@ -324,6 +336,7 @@ foreach ($grouped as $key => $value) {
 
         $methods = [];
         $parts_final = [];
+        $deprecated_path_dict = [];
 
         foreach ($path_dicts as $method_dict) {
             $methods[] = strtoupper($method_dict['method']);
@@ -341,8 +354,12 @@ foreach ($grouped as $key => $value) {
             // var_dump($api);
             // echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n";
 
-            if (isset($method_dict['x-deprecation-message'])) {
-                $x_deprecation_message = $method_dict['x-deprecation-message'];
+            if (isset($method_dict["x-version-deprecated"])) {
+                $deprecated_path_dict = array_merge($deprecated_path_dict, ["version" => $method_dict["x-version-deprecated"]]);
+            }
+
+            if (isset($method_dict["x-deprecation-message"])) {
+                $deprecated_path_dict = array_merge($deprecated_path_dict, ["description" => $method_dict["x-deprecation-message"]]);
             } else {
                 $all_paths_have_deprecation = false;
             }
@@ -372,7 +389,7 @@ foreach ($grouped as $key => $value) {
                 // Check for content type "application/x-ndjson"
                 if (isset($data['components']['requestBodies'][$requestbody_ref]['content']['application/x-ndjson'])) {
                     $requestbody_schema = $data['components']['requestBodies'][$requestbody_ref]['content']['application/x-ndjson']['schema'];
-                    $body['serialize'] = true;
+                    $body['serialize'] = "bulk";
                 } else {
                     // Otherwise, default to "application/json"
                     $requestbody_schema = $data['components']['requestBodies'][$requestbody_ref]['content']['application/json']['schema'];
@@ -405,23 +422,25 @@ foreach ($grouped as $key => $value) {
         }
 
         // Add the path, methods, and parts (if any) to paths array
-        if (!empty($parts_final)) {
-            $paths[] = [
-                'path' => $path,
-                'methods' => $methods,
-                'parts' => $parts_final
-            ];
-        } else {
-            $paths[] = ['path' => $path, 'methods' => $methods];
+        $path_data = ['path' => $path, 'methods' => $methods];
+
+        if (!empty($deprecated_path_dict)) {
+            $path_data['deprecated'] = $deprecated_path_dict;
         }
+
+        if (!empty($parts_final)) {
+            $path_data['parts'] = $parts_final;
+        }
+
+        $paths[] = $path_data;
     }
 
     // Update api with paths information
     $api['url'] = ['paths' => $paths];
 
-    if ($all_paths_have_deprecation && isset($x_deprecation_message)) {
-        $api['deprecation_message'] = $x_deprecation_message;
-    }
+    // if ($all_paths_have_deprecation && isset($x_deprecation_message)) {
+    //     $api['deprecation_message'] = $x_deprecation_message;
+    // }
     // echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n";
     // echo "api later 2222222=\n";
     // var_dump($api);

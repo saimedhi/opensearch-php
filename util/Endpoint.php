@@ -180,7 +180,7 @@ class Endpoint
             if (in_array($part, ['type', 'index', 'id'])) {
                 continue;
             }
-            if (isset($value['type']) && $value['type'] === 'list') {
+            if (isset($value['type']) && $value['type'] === 'array') {
                 $parts .= $this->getSetPartList($part);
             } else {
                 $parts .= $this->getSetPart($part);
