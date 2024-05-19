@@ -27,7 +27,6 @@ class ListTasks extends AbstractEndpoint
 {
     public function getURI(): string
     {
-
         return "/_tasks";
     }
 

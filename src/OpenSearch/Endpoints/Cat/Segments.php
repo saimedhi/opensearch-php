@@ -58,4 +58,9 @@ class Segments extends AbstractEndpoint
     {
         return 'GET';
     }
+
+    protected function getParamDeprecation(): array
+    {
+        return ['master_timeout' => 'cluster_manager_timeout'];
+    }
 }

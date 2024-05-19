@@ -27,7 +27,6 @@ class Reindex extends AbstractEndpoint
 {
     public function getURI(): string
     {
-
         return "/_reindex";
     }
 

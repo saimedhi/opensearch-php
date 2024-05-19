@@ -27,7 +27,6 @@ class GetScriptContext extends AbstractEndpoint
 {
     public function getURI(): string
     {
-
         return "/_script_context";
     }
 

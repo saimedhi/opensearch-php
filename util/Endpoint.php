@@ -141,7 +141,7 @@ class Endpoint
         }
         $class = str_replace(
             ':uri',
-            $this->extractUrl($this->content['url']['paths']),
+            trim($this->extractUrl($this->content['url']['paths'])),
             $class
         );
         $class = str_replace(

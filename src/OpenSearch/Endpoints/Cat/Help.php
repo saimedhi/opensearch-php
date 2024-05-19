@@ -27,7 +27,6 @@ class Help extends AbstractEndpoint
 {
     public function getURI(): string
     {
-
         return "/_cat";
     }
 

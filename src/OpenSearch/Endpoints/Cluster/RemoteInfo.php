@@ -27,7 +27,6 @@ class RemoteInfo extends AbstractEndpoint
 {
     public function getURI(): string
     {
-
         return "/_remote/info";
     }
 

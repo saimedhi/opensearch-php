@@ -21,7 +21,6 @@ class GetCertificates extends AbstractEndpoint
 {
     public function getURI(): string
     {
-
         return "/_plugins/_security/api/ssl/certs";
     }
 

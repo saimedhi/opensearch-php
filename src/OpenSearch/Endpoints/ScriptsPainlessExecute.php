@@ -27,7 +27,6 @@ class ScriptsPainlessExecute extends AbstractEndpoint
 {
     public function getURI(): string
     {
-
         return "/_scripts/painless/_execute";
     }
 
