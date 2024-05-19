@@ -23,4 +23,5 @@ class :endpoint extends AbstractEndpoint
     {
         return :method;
     }
-:set-parts}
+:set-parts
+:master_timeout_ParamDeprecation}

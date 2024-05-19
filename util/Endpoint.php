@@ -35,6 +35,7 @@ class Endpoint
     public const CHECK_OPTIONS_TEMPLATE       = __DIR__ . '/template/check-options';
     public const SET_BULK_BODY_TEMPLATE       = __DIR__ . '/template/set-bulk-body';
     public const DEPRECATED_PART              = __DIR__ . '/template/deprecated';
+    public const DEPRECATED_PARAM             = __DIR__ . '/template/deprecated-param-master-timeout';
     public const PHP_RESERVED_WORDS = [
         'abstract', 'and', 'array', 'as', 'break', 'callable', 'case', 'catch',
         'class', 'clone', 'const', 'continue', 'declare', 'default', 'die', 'do',
@@ -190,6 +191,13 @@ class Endpoint
         $class = str_replace(':endpoint', $this->getClassName(), $class);
         $class = str_replace(':use-namespace', $this->getNamespaces(), $class);
         $class = str_replace(':properties', $this->getProperties(), $class);
+        if (isset($this->content['params']['master_timeout'])) {
+            $deprecatedContent = file_get_contents(self::DEPRECATED_PARAM);
+            $class = str_replace(':master_timeout_ParamDeprecation', $deprecatedContent, $class);
+        } else {
+            // Remove the entire line containing the placeholder
+            $class = preg_replace('/\s*:master_timeout_ParamDeprecation\s*\}/', '}', $class);
+        }
         // Determine the file path
         $currentDir = dirname(__FILE__); // Get the current working directory
         $baseDir = dirname($currentDir); // Go up one directory to get the base directory
