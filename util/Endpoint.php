@@ -159,11 +159,17 @@ class Endpoint
 
         // Set the HTTP method
         $action = $this->getMethod();
-        if (!empty($this->content['body']) &&
-            ($action === ['GET', 'POST'] || $action === ['POST', 'GET'])) {
-            $method = 'isset($this->body) ? \'POST\' : \'GET\'';
+        if ($action === ['POST', 'PUT'] && $this->getClassName() !== 'Bulk') {
+            // If yes, set $method to 'PUT'
+            $method = "'PUT'";
         } else {
-            $method = sprintf("'%s'", reset($action));
+            // Otherwise, proceed with the existing logic
+            if (!empty($this->content['body']) &&
+                ($action === ['GET', 'POST'] || $action === ['POST', 'GET'])) {
+                $method = 'isset($this->body) ? \'POST\' : \'GET\'';
+            } else {
+                $method = sprintf("'%s'", reset($action));
+            }
         }
         $class = str_replace(':method', $method, $class);
 
