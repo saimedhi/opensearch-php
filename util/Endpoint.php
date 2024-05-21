@@ -122,6 +122,8 @@ class Endpoint
         }
         if (count($required) > 1) {
             return call_user_func_array('array_intersect', $required);
+        } elseif (count($required) === 1) {
+            return $required[0];
         }
         return $required;
     }
