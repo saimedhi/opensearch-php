@@ -208,7 +208,8 @@ class Endpoint
         $EndpointName = $this->getClassName();
 
         if (!empty($this->namespace)) {
-            $filePath = $baseDir . "/src/OpenSearch/Endpoints/$this->namespace/$EndpointName.php";
+            $namespace = str_replace('_', '', ucwords($this->namespace, '_'));
+            $filePath = $baseDir . "/src/OpenSearch/Endpoints/$namespace/$EndpointName.php";
         } else {
             $filePath = $baseDir . "/src/OpenSearch/Endpoints/$EndpointName.php";
         }
