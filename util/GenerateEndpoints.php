@@ -291,7 +291,10 @@ foreach ($grouped as $key => $value) {
 foreach ($files as $entry) {
     foreach ($entry as $key => $api) {
 
-        printf("Generating %s...", $key);
+        printf("Generating %s...\n", $key);
+        if ($key === "cat.master") {
+            print_r($api);
+        }
         $entry_json = json_encode($entry);
         $endpoint = new Endpoint($key . '.json', $entry_json);
 

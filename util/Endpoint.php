@@ -122,8 +122,6 @@ class Endpoint
         }
         if (count($required) > 1) {
             return call_user_func_array('array_intersect', $required);
-        } elseif (count($required) === 1) {
-            return $required[0];
         }
         return $required;
     }
@@ -214,12 +212,13 @@ class Endpoint
         } else {
             $filePath = $baseDir . "/src/OpenSearch/Endpoints/$EndpointName.php";
         }
-
+        echo $filePath;
         if (file_exists($filePath)) {
             $content = file_get_contents($filePath);
-
+            echo "@@@@@@@@@@@@@@@ exists @@@@@@@@@@@@@";
             if (strpos($content, 'Copyright OpenSearch') !== false) {
                 $pattern = '/\/\*\*.*?\*\//s';
+                echo "##################" . $filePath . "##################";
                 if (preg_match($pattern, $content, $matches)) {
                     $class = str_replace('declare(strict_types=1);', 'declare(strict_types=1);' . PHP_EOL . PHP_EOL . $matches[0], $class);
                 }
