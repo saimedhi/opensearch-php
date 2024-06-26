@@ -159,15 +159,17 @@ class Endpoint
 
         // Set the HTTP method
         $action = $this->getMethod();
+        echo $this->getClassName();
         if ($action === ['POST', 'PUT'] && $this->getClassName() !== 'Bulk') {
             $method = "'PUT'";
+        } elseif (!empty($this->content['body']) && ($action === ['GET', 'POST'] || $action === ['POST', 'GET'])) {
+            $method = 'isset($this->body) ? \'POST\' : \'GET\'';
+            echo "@@@@@@@@";
+        } elseif ($this->getClassName() == "Refresh" || $this->getClassName() == "Flush") {
+            $method = "'POST'";
         } else {
-            if (!empty($this->content['body']) &&
-                ($action === ['GET', 'POST'] || $action === ['POST', 'GET'])) {
-                $method = 'isset($this->body) ? \'POST\' : \'GET\'';
-            } else {
-                $method = sprintf("'%s'", reset($action));
-            }
+            $method = sprintf("'%s'", reset($action));
+            echo "++++++printed else+++++";
         }
         $class = str_replace(':method', $method, $class);
 
@@ -231,9 +233,14 @@ class Endpoint
     public function getMethod(): array
     {
         $methods = $this->content['url']['paths'][0]['methods'];
+        #echo "printed printed ....";
+        #print_r($methods);
         foreach ($this->content['url']['paths'] as $path) {
+            #print_r($path['methods']);
             $methods = array_intersect($methods, $path['methods']);
+            print_r($methods);
         }
+        #echo "Done......................................";
         return $methods;
     }
 

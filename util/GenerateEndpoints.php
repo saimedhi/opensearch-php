@@ -292,7 +292,7 @@ foreach ($files as $entry) {
     foreach ($entry as $key => $api) {
 
         printf("Generating %s...\n", $key);
-        if ($key === "cat.master") {
+        if ($key === "indices.flush") {
             print_r($api);
         }
         $entry_json = json_encode($entry);
@@ -489,7 +489,7 @@ function isValidPhpSyntax(string $filename): bool
  */
 function Patch_Endpoints()
 {
-    $patchEndpoints = ['AsyncSearch', 'SearchableSnapshots', 'Ssl', 'Sql', 
+    $patchEndpoints = ['AsyncSearch', 'SearchableSnapshots', 'Ssl', 'Sql',
     'DataFrameTransformDeprecated', 'Monitoring', 'MachineLearning' ];
     $outputDir = __DIR__ . "/output";
     $destDir = __DIR__ . "/../src/OpenSearch";
@@ -509,8 +509,6 @@ function Patch_Endpoints()
         foreach ($iterator as $file) {
             if ($file->isFile()) {
                 $filePath = $file->getPathname();
-                echo "%%%%%%%%%%%%%%%%%%%%%%";
-                echo $filePath;
                 foreach ($patchEndpoints as $endpoint) {
                     if (strpos($filePath, $endpoint) !== false) {
                         $relativePath = str_replace($destDir, '', $filePath);
