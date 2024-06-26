@@ -361,6 +361,7 @@ foreach ($namespaces as $name => $endpoints) {
 $destDir = __DIR__ . "/../src/OpenSearch";
 
 printf("Copying the generated files to %s\n", $destDir);
+Patch_Endpoints();
 cleanFolders();
 fix_license_header($outputDir . "/Namespaces");
 fix_license_header($outputDir . "/Endpoints");
@@ -481,4 +482,47 @@ function isValidPhpSyntax(string $filename): bool
         return false !== strpos($result, "No syntax errors");
     }
     return false;
+}
+
+/**
+ * Patching Endpoints that donot have  opensearch specification yet
+ */
+function Patch_Endpoints()
+{
+    $patchEndpoints = ['AsyncSearch', 'SearchableSnapshots', 'Ssl', 'Sql', 
+    'DataFrameTransformDeprecated', 'Monitoring', 'MachineLearning' ];
+    $outputDir = __DIR__ . "/output";
+    $destDir = __DIR__ . "/../src/OpenSearch";
+
+    $foldersToCheck = ['Endpoints', 'Namespaces'];
+
+    foreach ($foldersToCheck as $folder) {
+        $dirPath = "$destDir/$folder";
+        if (!is_dir($dirPath)) {
+            continue;
+        }
+
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($dirPath, RecursiveDirectoryIterator::SKIP_DOTS)
+        );
+
+        foreach ($iterator as $file) {
+            if ($file->isFile()) {
+                $filePath = $file->getPathname();
+                echo "%%%%%%%%%%%%%%%%%%%%%%";
+                echo $filePath;
+                foreach ($patchEndpoints as $endpoint) {
+                    if (strpos($filePath, $endpoint) !== false) {
+                        $relativePath = str_replace($destDir, '', $filePath);
+                        $targetPath = $outputDir . $relativePath;
+
+                        if (!file_exists($targetPath)) {
+                            is_dir(dirname($targetPath)) || mkdir(dirname($targetPath), 0777, true);
+                            copy($filePath, $targetPath);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
