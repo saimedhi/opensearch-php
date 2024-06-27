@@ -907,6 +907,41 @@ class Client
         return $this->performRequest($endpoint);
     }
     /**
+     * Creates point in time context.
+     *
+     * $params['index']                      = (array) Comma-separated list of indices; use `_all` or empty string to perform the operation on all indices.
+     * $params['allow_partial_pit_creation'] = (boolean) Allow if point in time can be created with partial failures.
+     * $params['keep_alive']                 = (string) Specify the keep alive for point in time.
+     * $params['preference']                 = (string) Specify the node or shard the operation should be performed on. (Default = random)
+     * $params['routing']                    = (array) Comma-separated list of specific routing values.
+     * $params['expand_wildcards']           = (any) Whether to expand wildcard expression to concrete indices that are open, closed or both.
+     * $params['pretty']                     = (boolean) Whether to pretty format the returned JSON response.
+     * $params['human']                      = (boolean) Whether to return human readable values for statistics.
+     * $params['error_trace']                = (boolean) Whether to include the stack trace of returned errors.
+     * $params['source']                     = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
+     * $params['filter_path']                = (any) Comma-separated list of filters used to reduce the response.
+     *
+     * @param array $params Associative array of parameters
+     * @return array
+     */
+    public function createPit(array $params = [])
+    {
+        $index = $this->extractArgument($params, 'index');
+        $endpointBuilder = $this->endpoints;
+        $endpoint = $endpointBuilder('CreatePit');
+        $endpoint->setParams($params);
+        $endpoint->setIndex($index);
+        return $this->performRequest($endpoint);
+    }
+    /**
+     * Proxy function to createPointInTime() to prevent BC break.
+     * This API will be removed in a future version. Use 'createPit' API instead.
+     */
+    public function createPointInTime(array $params = [])
+    {
+        return $this->createPit($params);
+    }
+    /**
      * $params['task_id']             = (string) The task id to rethrottle
      * $params['requests_per_second'] = (number) The throttle to set on this request in floating sub-requests per second. -1 means set no throttle. (Required)
      *
@@ -1261,28 +1296,6 @@ class Client
         $endpoint = $endpointBuilder('DeletePointInTime');
         $endpoint->setParams($params);
         $endpoint->setBody($body);
-
-        return $this->performRequest($endpoint);
-    }
-    /**
-     * $params['index']              = (list) A comma-separated list of index names to open point in time; use `_all` or empty string to perform the operation on all indices
-     * $params['preference']         = (string) Specify the node or shard the operation should be performed on (default: random)
-     * $params['routing']            = (string) Specific routing value
-     * $params['ignore_unavailable'] = (boolean) Whether specified concrete indices should be ignored when unavailable (missing or closed)
-     * $params['expand_wildcards']   = (enum) Whether to expand wildcard expression to concrete indices that are open, closed or both. (Options = open,closed,hidden,none,all) (Default = open)
-     * $params['keep_alive']         = (string) Specific the time to live for the point in time
-     *
-     * @param array $params Associative array of parameters
-     * @return array
-     */
-    public function createPointInTime(array $params = [])
-    {
-        $index = $this->extractArgument($params, 'index');
-
-        $endpointBuilder = $this->endpoints;
-        $endpoint = $endpointBuilder('CreatePointInTime');
-        $endpoint->setParams($params);
-        $endpoint->setIndex($index);
 
         return $this->performRequest($endpoint);
     }

@@ -89,6 +89,13 @@ class ClientEndpoint extends NamespaceEndpoint
         foreach ($this->endpoints as $endpoint) {
             $endpoints .= $this->renderEndpoint($endpoint);
         }
+        $proxyFolder = 'util/endpointproxies/';
+        if (is_dir($proxyFolder)) {
+            $proxyFiles = glob($proxyFolder . '/*.php');
+            foreach ($proxyFiles as $file) {
+                $endpoints .= require $file;
+            }
+        }
         $class = str_replace(':endpoints', $endpoints, $class);
 
         // Namespace functions
