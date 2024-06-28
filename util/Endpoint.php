@@ -94,7 +94,7 @@ class Endpoint
         $this->content = $this->content[$this->apiName];
 
         $this->parts = $this->getPartsFromContent($this->content);
-        $this->requiredParts = $this->getRequiredParts($this->content);
+        $this->requiredParts = $this->getRequiredParts($this->content, $this->namespace);
     }
 
     public function getParts(): array
@@ -113,7 +113,7 @@ class Endpoint
         return $parts;
     }
 
-    private function getRequiredParts(array $content): array
+    private function getRequiredParts(array $content, string $namespace): array
     {
         $required = [];
         // Get the list of required parts
@@ -122,6 +122,14 @@ class Endpoint
         }
         if (count($required) > 1) {
             return call_user_func_array('array_intersect', $required);
+        }
+        // echo"+++++++++++=========";
+        // print_r($required);
+        // echo"=========+++++++";
+        // echo $namespace;
+        // echo"=========@@@@@@@@@+++++++";
+        if (empty($namespace) && !empty($required)) {
+            return $required[0];
         }
         return $required;
     }
@@ -164,12 +172,12 @@ class Endpoint
             $method = "'PUT'";
         } elseif (!empty($this->content['body']) && ($action === ['GET', 'POST'] || $action === ['POST', 'GET'])) {
             $method = 'isset($this->body) ? \'POST\' : \'GET\'';
-            echo "@@@@@@@@";
+            // echo "@@@@@@@@";
         } elseif ($this->getClassName() == "Refresh" || $this->getClassName() == "Flush") {
             $method = "'POST'";
         } else {
             $method = sprintf("'%s'", reset($action));
-            echo "++++++printed else+++++";
+            // echo "++++++printed else+++++";
         }
         $class = str_replace(':method', $method, $class);
 
@@ -233,12 +241,12 @@ class Endpoint
     public function getMethod(): array
     {
         $methods = $this->content['url']['paths'][0]['methods'];
-        #echo "printed printed ....";
-        #print_r($methods);
+        //echo "printed printed ....";
+        //print_r($methods);
         foreach ($this->content['url']['paths'] as $path) {
-            #print_r($path['methods']);
+            // print_r($path['methods']);
             $methods = array_intersect($methods, $path['methods']);
-            print_r($methods);
+            // print_r($methods);
         }
         #echo "Done......................................";
         return $methods;
@@ -278,16 +286,22 @@ class Endpoint
 
         $tab8 = str_repeat(' ', 8);
         $tab12 = str_repeat(' ', 12);
-
+        echo "1=========================================";
         if (!empty($this->parts)) {
+            echo "2=========================================";
             foreach ($this->parts as $part => $value) {
+                echo $part;
+                print_r($this->requiredParts);
+                echo "3=========================================";
                 if (in_array($part, $this->requiredParts)) {
+                    echo "4=========================================";
                     $checkPart .= str_replace(
                         ':endpoint',
                         $this->name,
                         str_replace(':part', $part, $skeleton)
                     );
                     $this->addNamespace('OpenSearch\Common\Exceptions\RuntimeException');
+                    echo $this->name;
                 } else {
                     $params .= sprintf("%s\$%s = \$this->%s ?? null;", $tab8, $part, $part);
                 }

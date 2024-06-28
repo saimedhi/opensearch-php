@@ -25,11 +25,13 @@ class CreatePit extends AbstractEndpoint
 {
     public function getURI(): string
     {
-        $index = $this->index ?? null;
-        if (isset($index)) {
-            return "/$index/_search/point_in_time";
+        if (isset($this->index) !== true) {
+            throw new RuntimeException(
+                'index is required for create_pit'
+            );
         }
-        throw new RuntimeException('Missing parameter for the endpoint create_pit');
+        $index = $this->index;
+        return "/$index/_search/point_in_time";
     }
 
     public function getParamWhitelist(): array

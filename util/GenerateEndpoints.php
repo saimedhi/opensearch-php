@@ -292,9 +292,9 @@ foreach ($files as $entry) {
     foreach ($entry as $key => $api) {
 
         printf("Generating %s...\n", $key);
-        if ($key === "indices.flush") {
-            print_r($api);
-        }
+        // if ($key === "exists" or $key === "index") {
+        //     print_r($api);
+        // }
         $entry_json = json_encode($entry);
         $endpoint = new Endpoint($key . '.json', $entry_json);
 

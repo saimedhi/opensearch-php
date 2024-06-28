@@ -31,11 +31,13 @@ class GetScript extends AbstractEndpoint
 {
     public function getURI(): string
     {
-        $id = $this->id ?? null;
-        if (isset($id)) {
-            return "/_scripts/$id";
+        if (isset($this->id) !== true) {
+            throw new RuntimeException(
+                'id is required for get_script'
+            );
         }
-        throw new RuntimeException('Missing parameter for the endpoint get_script');
+        $id = $this->id;
+        return "/_scripts/$id";
     }
 
     public function getParamWhitelist(): array
