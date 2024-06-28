@@ -45,6 +45,11 @@ $list_of_dicts = [];
 foreach ($data["paths"] as $path => $pathDetails) {
 
     foreach ($pathDetails as $method => $methodDetails) {
+        if (isset($methodDetails["x-operation-group"]) && $methodDetails["x-operation-group"] == "nodes.hot_threads") {
+            if (isset($methodDetails["deprecated"]) && $methodDetails["deprecated"]) {
+                continue;
+            }
+        }
         $methodDetails["path"] = $path;
         $methodDetails["method"] = $method;
         $list_of_dicts[] = $methodDetails;
