@@ -71,7 +71,7 @@ class CreatePitTest extends \PHPUnit\Framework\TestCase
     {
         // Arrange
         $expected = RuntimeException::class;
-        $expectedMessage = 'index is required for creating point-in-time';
+        $expectedMessage = 'index is required for create_pit';
 
         // Assert
         $this->expectException($expected);
