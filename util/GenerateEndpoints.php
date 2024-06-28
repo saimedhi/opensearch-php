@@ -137,6 +137,13 @@ foreach ($list_of_dicts as $index => $endpoint) {
         if ($endpoint['x-operation-group'] !== 'nodes.hot_threads' && isset($params_new['type'])) {
             unset($params_new['type']);
         }
+        if ($endpoint['x-operation-group'] === 'cat.tasks') {
+            $params_new['node_id'] = $params_new['nodes'] ?? $params_new['node_id'];
+            unset($params_new['nodes']);
+
+            $params_new['parent_task'] = $params_new['parent_task_id'] ?? $params_new['parent_task'];
+            unset($params_new['parent_task_id']);
+        }
         if (!empty($params_new)) {
             $endpoint['params'] = $params_new;
         }
