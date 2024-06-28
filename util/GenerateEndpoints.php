@@ -290,6 +290,9 @@ foreach ($grouped as $key => $value) {
     }
 
     $api['url'] = ['paths' => $paths];
+    if ($all_paths_have_deprecation && $deprecated_path_dict !== null) {
+        $api['deprecation_message'] = $deprecated_path_dict['description'];
+    }
     $files[] = [$key => $api];
 }
 // Generate endpoints
@@ -297,9 +300,9 @@ foreach ($files as $entry) {
     foreach ($entry as $key => $api) {
 
         printf("Generating %s...\n", $key);
-        // if ($key === "exists" or $key === "index") {
-        //     print_r($api);
-        // }
+        if ($key === "cat.master") {
+            print_r($api);
+        }
         $entry_json = json_encode($entry);
         $endpoint = new Endpoint($key . '.json', $entry_json);
 

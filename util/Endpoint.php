@@ -164,6 +164,9 @@ class Endpoint
                 : '\\' . $this->normalizeName($this->namespace),
             $class
         );
+        $class = isset($this->content['deprecation_message'])
+            ? str_replace(':deprecation-message', $this->content['deprecation_message'], $class)
+            : preg_replace('/\s*\/\*\*\s+\*\s+@deprecated :deprecation-message\s+\*\//', '', $class);
 
         // Set the HTTP method
         $action = $this->getMethod();
