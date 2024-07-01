@@ -157,7 +157,9 @@ foreach ($list_of_dicts as $index => $endpoint) {
                 foreach ($part['schema']['oneOf'] as $item) {
                     if (isset($item['type'])) {
                         $parts_dict['type'] = $item['type'];
-                        break;
+                        if ($item['type'] == "array") {
+                            break;
+                        }
                     }
                 }
             }

@@ -942,6 +942,38 @@ class Client
         return $this->createPit($params);
     }
     /**
+     * Proxy function to deletePointInTime() to prevent BC break.
+     * This API will be removed in a future version. Use 'deletePit' API instead.
+     */
+    public function deletePointInTime(array $params = [])
+    {
+        return $this->deletePit($params);
+    }
+    /**
+     * Deletes one or more point in time searches based on the IDs passed.
+     *
+     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
+     * $params['human']       = (boolean) Whether to return human readable values for statistics.
+     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
+     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
+     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
+     * $params['body']        = (array) The point-in-time ids to be deleted
+     *
+     * @param array $params Associative array of parameters
+     * @return array
+     */
+    public function deletePit(array $params = [])
+    {
+        $body = $this->extractArgument($params, 'body');
+
+        $endpointBuilder = $this->endpoints;
+        $endpoint = $endpointBuilder('DeletePit');
+        $endpoint->setParams($params);
+        $endpoint->setBody($body);
+
+        return $this->performRequest($endpoint);
+    }
+    /**
      * $params['task_id']             = (string) The task id to rethrottle
      * $params['requests_per_second'] = (number) The throttle to set on this request in floating sub-requests per second. -1 means set no throttle. (Required)
      *
