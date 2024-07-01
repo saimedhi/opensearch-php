@@ -1282,23 +1282,6 @@ class Client
 
         return $this->performRequest($endpoint);
     }
-    /**
-     * $params['body'] = (array) a point-in-time id to delete
-     *
-     * @param array $params Associative array of parameters
-     * @return array
-     */
-    public function deletePointInTime(array $params = [])
-    {
-        $body = $this->extractArgument($params, 'body');
-
-        $endpointBuilder = $this->endpoints;
-        $endpoint = $endpointBuilder('DeletePointInTime');
-        $endpoint->setParams($params);
-        $endpoint->setBody($body);
-
-        return $this->performRequest($endpoint);
-    }
     public function cat(): CatNamespace
     {
         return $this->cat;
