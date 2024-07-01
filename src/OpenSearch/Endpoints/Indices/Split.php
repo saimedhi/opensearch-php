@@ -44,13 +44,13 @@ class Split extends AbstractEndpoint
     public function getParamWhitelist(): array
     {
         return [
-            'copy_settings',
-            'timeout',
-            'master_timeout',
             'cluster_manager_timeout',
+            'copy_settings',
+            'master_timeout',
+            'task_execution_timeout',
+            'timeout',
             'wait_for_active_shards',
             'wait_for_completion',
-            'task_execution_timeout',
             'pretty',
             'human',
             'error_trace',

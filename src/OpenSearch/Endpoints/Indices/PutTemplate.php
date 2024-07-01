@@ -43,10 +43,10 @@ class PutTemplate extends AbstractEndpoint
     public function getParamWhitelist(): array
     {
         return [
-            'order',
+            'cluster_manager_timeout',
             'create',
             'master_timeout',
-            'cluster_manager_timeout',
+            'order',
             'pretty',
             'human',
             'error_trace',

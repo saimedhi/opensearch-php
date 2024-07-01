@@ -36,9 +36,9 @@ class Tasks extends AbstractEndpoint
     public function getParamWhitelist(): array
     {
         return [
-            'format',
             'actions',
             'detailed',
+            'format',
             'h',
             'help',
             's',

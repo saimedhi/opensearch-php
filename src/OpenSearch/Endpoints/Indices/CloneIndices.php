@@ -44,12 +44,12 @@ class CloneIndices extends AbstractEndpoint
     public function getParamWhitelist(): array
     {
         return [
-            'timeout',
-            'master_timeout',
             'cluster_manager_timeout',
+            'master_timeout',
+            'task_execution_timeout',
+            'timeout',
             'wait_for_active_shards',
             'wait_for_completion',
-            'task_execution_timeout',
             'pretty',
             'human',
             'error_trace',

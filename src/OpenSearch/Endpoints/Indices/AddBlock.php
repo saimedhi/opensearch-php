@@ -33,8 +33,8 @@ class AddBlock extends AbstractEndpoint
 
     public function getURI(): string
     {
-        $index = $this->index ?? null;
         $block = $this->block ?? null;
+        $index = $this->index ?? null;
         if (isset($index) && isset($block)) {
             return "/$index/_block/$block";
         }
@@ -44,12 +44,12 @@ class AddBlock extends AbstractEndpoint
     public function getParamWhitelist(): array
     {
         return [
-            'timeout',
-            'master_timeout',
-            'cluster_manager_timeout',
-            'ignore_unavailable',
             'allow_no_indices',
+            'cluster_manager_timeout',
             'expand_wildcards',
+            'ignore_unavailable',
+            'master_timeout',
+            'timeout',
             'pretty',
             'human',
             'error_trace',

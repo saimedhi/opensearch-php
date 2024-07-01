@@ -39,12 +39,12 @@ class Master extends AbstractEndpoint
     public function getParamWhitelist(): array
     {
         return [
-            'format',
-            'local',
-            'master_timeout',
             'cluster_manager_timeout',
+            'format',
             'h',
             'help',
+            'local',
+            'master_timeout',
             's',
             'v',
             'pretty',

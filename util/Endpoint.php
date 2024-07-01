@@ -229,10 +229,10 @@ class Endpoint
         echo $filePath;
         if (file_exists($filePath)) {
             $content = file_get_contents($filePath);
-            echo "@@@@@@@@@@@@@@@ exists @@@@@@@@@@@@@";
+            // echo "@@@@@@@@@@@@@@@ exists @@@@@@@@@@@@@";
             if (strpos($content, 'Copyright OpenSearch') !== false) {
                 $pattern = '/\/\*\*.*?\*\//s';
-                echo "##################" . $filePath . "##################";
+                // echo "##################" . $filePath . "##################";
                 if (preg_match($pattern, $content, $matches)) {
                     $class = str_replace('declare(strict_types=1);', 'declare(strict_types=1);' . PHP_EOL . PHP_EOL . $matches[0], $class);
                 }
@@ -289,15 +289,15 @@ class Endpoint
 
         $tab8 = str_repeat(' ', 8);
         $tab12 = str_repeat(' ', 12);
-        echo "1=========================================";
+        // echo "1=========================================";
         if (!empty($this->parts)) {
-            echo "2=========================================";
+            // echo "2=========================================";
             foreach ($this->parts as $part => $value) {
                 echo $part;
                 print_r($this->requiredParts);
-                echo "3=========================================";
+                // echo "3=========================================";
                 if (in_array($part, $this->requiredParts)) {
-                    echo "4=========================================";
+                    // echo "4=========================================";
                     $checkPart .= str_replace(
                         ':endpoint',
                         $this->name,

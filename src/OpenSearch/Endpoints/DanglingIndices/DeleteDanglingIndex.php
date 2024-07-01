@@ -44,9 +44,9 @@ class DeleteDanglingIndex extends AbstractEndpoint
     {
         return [
             'accept_data_loss',
-            'timeout',
-            'master_timeout',
             'cluster_manager_timeout',
+            'master_timeout',
+            'timeout',
             'pretty',
             'human',
             'error_trace',

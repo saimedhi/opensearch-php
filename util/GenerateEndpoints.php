@@ -307,7 +307,10 @@ foreach ($files as $entry) {
     foreach ($entry as $key => $api) {
 
         printf("Generating %s...\n", $key);
-        if ($key === "cat.master") {
+        if ($key === "cluster.get_component_template") {
+            print_r($api);
+        }
+        if ($key === "cat.allocation") {
             print_r($api);
         }
         $entry_json = json_encode($entry);

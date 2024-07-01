@@ -48,13 +48,13 @@ class Msearch extends AbstractEndpoint
     public function getParamWhitelist(): array
     {
         return [
-            'search_type',
-            'max_concurrent_searches',
-            'typed_keys',
-            'pre_filter_shard_size',
-            'max_concurrent_shard_requests',
-            'rest_total_hits_as_int',
             'ccs_minimize_roundtrips',
+            'max_concurrent_searches',
+            'max_concurrent_shard_requests',
+            'pre_filter_shard_size',
+            'rest_total_hits_as_int',
+            'search_type',
+            'typed_keys',
             'pretty',
             'human',
             'error_trace',

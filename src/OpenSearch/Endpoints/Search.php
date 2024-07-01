@@ -40,9 +40,9 @@ class Search extends AbstractEndpoint
     public function getParamWhitelist(): array
     {
         return [
+            '_source',
             '_source_excludes',
             '_source_includes',
-            '_source',
             'allow_no_indices',
             'allow_partial_search_results',
             'analyze_wildcard',

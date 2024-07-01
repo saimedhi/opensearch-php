@@ -30,12 +30,12 @@ class PitSegments extends AbstractEndpoint
     public function getParamWhitelist(): array
     {
         return [
+            'bytes',
             'format',
             'h',
             'help',
             's',
             'v',
-            'bytes',
             'pretty',
             'human',
             'error_trace',

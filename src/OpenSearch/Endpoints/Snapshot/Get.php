@@ -45,9 +45,9 @@ class Get extends AbstractEndpoint
     public function getParamWhitelist(): array
     {
         return [
-            'master_timeout',
             'cluster_manager_timeout',
             'ignore_unavailable',
+            'master_timeout',
             'verbose',
             'pretty',
             'human',

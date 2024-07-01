@@ -100,8 +100,8 @@ class RollupsNamespace extends AbstractNamespace
      * Create or update index rollup.
      *
      * $params['id']              = (string) Rollup to access (Required)
-     * $params['if_seq_no']       = (number) Only perform the operation if the document has this sequence number.
      * $params['if_primary_term'] = (number) Only perform the operation if the document has this primary term.
+     * $params['if_seq_no']       = (number) Only perform the operation if the document has this sequence number.
      * $params['pretty']          = (boolean) Whether to pretty format the returned JSON response.
      * $params['human']           = (boolean) Whether to return human readable values for statistics.
      * $params['error_trace']     = (boolean) Whether to include the stack trace of returned errors.

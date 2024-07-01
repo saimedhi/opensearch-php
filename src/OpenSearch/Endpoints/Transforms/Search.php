@@ -30,11 +30,11 @@ class Search extends AbstractEndpoint
     public function getParamWhitelist(): array
     {
         return [
-            'size',
             'from',
             'search',
-            'sortField',
+            'size',
             'sortDirection',
+            'sortField',
             'pretty',
             'human',
             'error_trace',

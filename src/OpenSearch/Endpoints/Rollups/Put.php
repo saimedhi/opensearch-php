@@ -37,8 +37,8 @@ class Put extends AbstractEndpoint
     public function getParamWhitelist(): array
     {
         return [
-            'if_seq_no',
             'if_primary_term',
+            'if_seq_no',
             'pretty',
             'human',
             'error_trace',

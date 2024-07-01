@@ -41,14 +41,14 @@ class Get extends AbstractEndpoint
     public function getParamWhitelist(): array
     {
         return [
-            'local',
-            'ignore_unavailable',
             'allow_no_indices',
+            'cluster_manager_timeout',
             'expand_wildcards',
             'flat_settings',
+            'ignore_unavailable',
             'include_defaults',
+            'local',
             'master_timeout',
-            'cluster_manager_timeout',
             'pretty',
             'human',
             'error_trace',

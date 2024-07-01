@@ -120,8 +120,8 @@ class TransformsNamespace extends AbstractNamespace
      * Create an index transform, or update a transform if if_seq_no and if_primary_term are provided.
      *
      * $params['id']              = (string) Transform to create/update
-     * $params['if_seq_no']       = (number) Only perform the operation if the document has this sequence number.
      * $params['if_primary_term'] = (number) Only perform the operation if the document has this primary term.
+     * $params['if_seq_no']       = (number) Only perform the operation if the document has this sequence number.
      * $params['pretty']          = (boolean) Whether to pretty format the returned JSON response.
      * $params['human']           = (boolean) Whether to return human readable values for statistics.
      * $params['error_trace']     = (boolean) Whether to include the stack trace of returned errors.
@@ -147,11 +147,11 @@ class TransformsNamespace extends AbstractNamespace
     /**
      * Returns the details of all transform jobs.
      *
-     * $params['size']          = (number) Specifies the number of transforms to return. Default is 10.
      * $params['from']          = (number) The starting transform to return. Default is 0.
      * $params['search']        = (string) The search term to use to filter results.
-     * $params['sortField']     = (string) The field to sort results with.
+     * $params['size']          = (number) Specifies the number of transforms to return. Default is 10.
      * $params['sortDirection'] = (string) Specifies the direction to sort results in. Can be ASC or DESC. Default is ASC.
+     * $params['sortField']     = (string) The field to sort results with.
      * $params['pretty']        = (boolean) Whether to pretty format the returned JSON response.
      * $params['human']         = (boolean) Whether to return human readable values for statistics.
      * $params['error_trace']   = (boolean) Whether to include the stack trace of returned errors.

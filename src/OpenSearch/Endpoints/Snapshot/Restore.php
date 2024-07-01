@@ -45,8 +45,8 @@ class Restore extends AbstractEndpoint
     public function getParamWhitelist(): array
     {
         return [
-            'master_timeout',
             'cluster_manager_timeout',
+            'master_timeout',
             'wait_for_completion',
             'pretty',
             'human',

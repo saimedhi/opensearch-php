@@ -43,10 +43,10 @@ class PutIndexTemplate extends AbstractEndpoint
     public function getParamWhitelist(): array
     {
         return [
-            'create',
             'cause',
-            'master_timeout',
             'cluster_manager_timeout',
+            'create',
+            'master_timeout',
             'pretty',
             'human',
             'error_trace',

@@ -42,12 +42,12 @@ class HotThreads extends AbstractEndpoint
     public function getParamWhitelist(): array
     {
         return [
+            'ignore_idle_threads',
             'interval',
             'snapshots',
             'threads',
-            'ignore_idle_threads',
-            'type',
             'timeout',
+            'type',
             'pretty',
             'human',
             'error_trace',

@@ -40,12 +40,12 @@ class Segments extends AbstractEndpoint
     public function getParamWhitelist(): array
     {
         return [
-            'format',
             'bytes',
-            'master_timeout',
             'cluster_manager_timeout',
+            'format',
             'h',
             'help',
+            'master_timeout',
             's',
             'v',
             'pretty',

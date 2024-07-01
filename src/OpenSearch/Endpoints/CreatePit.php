@@ -38,10 +38,10 @@ class CreatePit extends AbstractEndpoint
     {
         return [
             'allow_partial_pit_creation',
+            'expand_wildcards',
             'keep_alive',
             'preference',
             'routing',
-            'expand_wildcards',
             'pretty',
             'human',
             'error_trace',

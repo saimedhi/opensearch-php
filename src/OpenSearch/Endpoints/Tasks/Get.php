@@ -43,8 +43,8 @@ class Get extends AbstractEndpoint
     public function getParamWhitelist(): array
     {
         return [
-            'wait_for_completion',
             'timeout',
+            'wait_for_completion',
             'pretty',
             'human',
             'error_trace',

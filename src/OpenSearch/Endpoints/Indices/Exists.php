@@ -41,12 +41,12 @@ class Exists extends AbstractEndpoint
     public function getParamWhitelist(): array
     {
         return [
-            'local',
-            'ignore_unavailable',
             'allow_no_indices',
             'expand_wildcards',
             'flat_settings',
+            'ignore_unavailable',
             'include_defaults',
+            'local',
             'pretty',
             'human',
             'error_trace',

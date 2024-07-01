@@ -48,11 +48,11 @@ class MsearchTemplate extends AbstractEndpoint
     public function getParamWhitelist(): array
     {
         return [
-            'search_type',
-            'typed_keys',
+            'ccs_minimize_roundtrips',
             'max_concurrent_searches',
             'rest_total_hits_as_int',
-            'ccs_minimize_roundtrips',
+            'search_type',
+            'typed_keys',
             'pretty',
             'human',
             'error_trace',

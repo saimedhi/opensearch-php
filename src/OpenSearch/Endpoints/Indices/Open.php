@@ -41,15 +41,15 @@ class Open extends AbstractEndpoint
     public function getParamWhitelist(): array
     {
         return [
-            'timeout',
-            'master_timeout',
-            'ignore_unavailable',
             'allow_no_indices',
-            'expand_wildcards',
             'cluster_manager_timeout',
+            'expand_wildcards',
+            'ignore_unavailable',
+            'master_timeout',
+            'task_execution_timeout',
+            'timeout',
             'wait_for_active_shards',
             'wait_for_completion',
-            'task_execution_timeout',
             'pretty',
             'human',
             'error_trace',
