@@ -370,7 +370,7 @@ class SecurityNamespaceTest extends TestCase
     public function testDeleteActionGroupThrowsWithoutActionGroupName(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Missing parameter for the endpoint security.delete_action_group');
+        $this->expectExceptionMessage('action_group is required for delete_action_group');
 
         $this->client->security()->deleteActionGroup();
     }
@@ -398,7 +398,7 @@ class SecurityNamespaceTest extends TestCase
     public function testDeleteDistinguishedNamesThrowsWithoutRoleName(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Missing parameter for the endpoint security.delete_distinguished_names');
+        $this->expectExceptionMessage('cluster_name is required for delete_distinguished_name');
 
         $this->client->security()->deleteDistinguishedNames();
     }
@@ -426,7 +426,7 @@ class SecurityNamespaceTest extends TestCase
     public function testDeleteRoleThrowsWithoutRole(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Missing parameter for the endpoint security.delete_role');
+        $this->expectExceptionMessage('role is required for delete_role');
 
         $this->client->security()->deleteRole();
     }
@@ -454,7 +454,7 @@ class SecurityNamespaceTest extends TestCase
     public function testDeleteRoleMappingThrowsWithoutRoleMappingName(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Missing parameter for the endpoint security.delete_role_mapping');
+        $this->expectExceptionMessage('role is required for delete_role_mapping');
 
         $this->client->security()->deleteRoleMapping();
     }
@@ -482,7 +482,7 @@ class SecurityNamespaceTest extends TestCase
     public function testDeleteTenantThrowsWithoutTenantName(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Missing parameter for the endpoint security.delete_tenant');
+        $this->expectExceptionMessage('tenant is required for delete_tenant');
 
         $this->client->security()->deleteTenant();
     }
@@ -510,7 +510,7 @@ class SecurityNamespaceTest extends TestCase
     public function testDeleteUserThrowsWithoutUsername(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Missing parameter for the endpoint security.delete_user');
+        $this->expectExceptionMessage('username is required for delete_user');
 
         $this->client->security()->deleteUser();
     }

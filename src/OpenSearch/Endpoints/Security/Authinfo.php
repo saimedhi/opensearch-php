@@ -30,8 +30,8 @@ class Authinfo extends AbstractEndpoint
     public function getParamWhitelist(): array
     {
         return [
-            'verbose',
             'auth_type',
+            'verbose',
             'pretty',
             'human',
             'error_trace',

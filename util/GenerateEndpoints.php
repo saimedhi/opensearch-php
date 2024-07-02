@@ -163,6 +163,10 @@ foreach ($list_of_dicts as $index => $endpoint) {
                     }
                 }
             }
+            if ($endpoint['x-operation-group'] === 'cluster.get_component_template' || $endpoint['x-operation-group'] === 'indices.get_index_template') {
+                $part['name'] = "name";
+                $parts_dict['type'] = 'array';
+            }
 
             if (isset($part['description'])) {
                 $parts_dict['description'] = str_replace("\n", " ", $part['description']);

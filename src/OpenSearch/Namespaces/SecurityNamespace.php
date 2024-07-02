@@ -168,22 +168,6 @@ class SecurityNamespace extends AbstractNamespace
     }
 
     /**
-     * $params['cluster_name']  = (string) The name of the cluster to delete distinguished names from
-     *
-     * @param array $params Associative array of parameters
-     * @return array
-     */
-    public function deleteDistinguishedNames(array $params = [])
-    {
-        $endpointBuilder = $this->endpoints;
-        $endpoint = $endpointBuilder('Security\DeleteDistinguishedNames');
-        $endpoint->setClusterName($this->extractArgument($params, 'cluster_name'));
-        $endpoint->setParams($params);
-
-        return $this->performRequest($endpoint);
-    }
-
-    /**
      * $params['role']  = (string) The name of the role to delete
      *
      * @param array $params Associative array of parameters
@@ -261,19 +245,6 @@ class SecurityNamespace extends AbstractNamespace
     }
 
     /**
-     * @param array $params Associative array of parameters
-     * @return array
-     */
-    public function getAccount(array $params = [])
-    {
-        $endpointBuilder = $this->endpoints;
-        $endpoint = $endpointBuilder('Security\GetAccount');
-        $endpoint->setParams($params);
-
-        return $this->performRequest($endpoint);
-    }
-
-    /**
      * $params['action_group'] = (string) The name of the action group to fetch, omit to fetch all (optional)
      *
      * @param array $params Associative array of parameters
@@ -297,19 +268,6 @@ class SecurityNamespace extends AbstractNamespace
     {
         $endpointBuilder = $this->endpoints;
         $endpoint = $endpointBuilder('Security\GetCertificates');
-        $endpoint->setParams($params);
-
-        return $this->performRequest($endpoint);
-    }
-
-    /**
-     * @param array $params Associative array of parameters
-     * @return array
-     */
-    public function getConfig(array $params = [])
-    {
-        $endpointBuilder = $this->endpoints;
-        $endpoint = $endpointBuilder('Security\GetConfig');
         $endpoint->setParams($params);
 
         return $this->performRequest($endpoint);
@@ -427,22 +385,6 @@ class SecurityNamespace extends AbstractNamespace
     }
 
     /**
-     * $params['ops'] = (array) List of operations to execute
-     *
-     * @param array $params Associative array of parameters
-     * @return array
-     */
-    public function patchConfig(array $params = [])
-    {
-        $endpointBuilder = $this->endpoints;
-        $endpoint = $endpointBuilder('Security\PatchConfig');
-        $endpoint->setBody($this->extractArgument($params, 'ops') ?? []);
-        $endpoint->setParams($params);
-
-        return $this->performRequest($endpoint);
-    }
-
-    /**
      * $params['role'] = (string) The name of the role mappings to update, omit to patch multiple (optional)
      * $params['ops']  = (array) List of operations to execute
      *
@@ -533,22 +475,169 @@ class SecurityNamespace extends AbstractNamespace
     }
 
     /**
-     * $params['cluster_name'] = (string) name of cluster to add or update distinguished names for
-     * $params['nodes_dn'] = (array) distinguished names to add to cluster
+     * Deletes all distinguished names in the specified cluster or node allow list. Only accessible to super-admins and with rest-api permissions when enabled.
+     *
+     * $params['cluster_name'] = (string)  (Required)
+     * $params['pretty']       = (boolean) Whether to pretty format the returned JSON response.
+     * $params['human']        = (boolean) Whether to return human readable values for statistics.
+     * $params['error_trace']  = (boolean) Whether to include the stack trace of returned errors.
+     * $params['source']       = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
+     * $params['filter_path']  = (any) Comma-separated list of filters used to reduce the response.
      *
      * @param array $params Associative array of parameters
      * @return array
      */
-    public function updateDistinguishedNames(array $params = [])
+    public function deleteDistinguishedName(array $params = [])
+    {
+        $cluster_name = $this->extractArgument($params, 'cluster_name');
+
+        $endpointBuilder = $this->endpoints;
+        $endpoint = $endpointBuilder('Security\DeleteDistinguishedName');
+        $endpoint->setParams($params);
+        $endpoint->setClusterName($cluster_name);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
+     * Returns account details for the current user.
+     *
+     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
+     * $params['human']       = (boolean) Whether to return human readable values for statistics.
+     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
+     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
+     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
+     *
+     * @param array $params Associative array of parameters
+     * @return array
+     */
+    public function getAccountDetails(array $params = [])
     {
         $endpointBuilder = $this->endpoints;
-        $endpoint = $endpointBuilder('Security\UpdateDistinguishedNames');
-        $endpoint->setBody([
-            'nodes_dn' => $this->extractArgument($params, 'nodes_dn'),
-        ]);
-        $endpoint->setClusterName($this->extractArgument($params, 'cluster_name'));
+        $endpoint = $endpointBuilder('Security\GetAccountDetails');
         $endpoint->setParams($params);
 
         return $this->performRequest($endpoint);
+    }
+
+    /**
+     * Returns the current Security plugin configuration in JSON format.
+     *
+     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
+     * $params['human']       = (boolean) Whether to return human readable values for statistics.
+     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
+     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
+     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
+     *
+     * @param array $params Associative array of parameters
+     * @return array
+     */
+    public function getConfiguration(array $params = [])
+    {
+        $endpointBuilder = $this->endpoints;
+        $endpoint = $endpointBuilder('Security\GetConfiguration');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+    /**
+     * A PATCH call is used to update the existing configuration using the REST API. Only accessible by admins and users with rest api access and only when put or patch is enabled.
+     *
+     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
+     * $params['human']       = (boolean) Whether to return human readable values for statistics.
+     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
+     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
+     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
+     *
+     * @param array $params Associative array of parameters
+     * @return array
+     */
+    public function patchConfiguration(array $params = [])
+    {
+        $body = $this->extractArgument($params, 'body');
+
+        $endpointBuilder = $this->endpoints;
+        $endpoint = $endpointBuilder('Security\PatchConfiguration');
+        $endpoint->setParams($params);
+        $endpoint->setBody($body);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
+     * Adds or updates the specified distinguished names in the cluster or node allow list. Only accessible to super-admins and with rest-api permissions when enabled.
+     *
+     * $params['cluster_name'] = (string)  (Required)
+     * $params['pretty']       = (boolean) Whether to pretty format the returned JSON response.
+     * $params['human']        = (boolean) Whether to return human readable values for statistics.
+     * $params['error_trace']  = (boolean) Whether to include the stack trace of returned errors.
+     * $params['source']       = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
+     * $params['filter_path']  = (any) Comma-separated list of filters used to reduce the response.
+     *
+     * @param array $params Associative array of parameters
+     * @return array
+     */
+    public function updateDistinguishedName(array $params = [])
+    {
+        $cluster_name = $this->extractArgument($params, 'cluster_name');
+        $body = $this->extractArgument($params, 'body');
+
+        $endpointBuilder = $this->endpoints;
+        $endpoint = $endpointBuilder('Security\UpdateDistinguishedName');
+        $endpoint->setParams($params);
+        $endpoint->setClusterName($cluster_name);
+        $endpoint->setBody($body);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
+     * Proxy function to deleteDistinguishedNames() to prevent BC break.
+     * This API will be removed in a future version. Use 'deleteDistinguishedName' API instead.
+     */
+    public function deleteDistinguishedNames(array $params = [])
+    {
+        return $this->deleteDistinguishedName($params);
+    }
+
+    /**
+     * Proxy function to getAccount() to prevent BC break.
+     * This API will be removed in a future version. Use 'getAccountDetails' API instead.
+     */
+    public function getAccount(array $params = [])
+    {
+        return $this->getAccountDetails($params);
+    }
+
+    /**
+     * Proxy function to getConfig() to prevent BC break.
+     * This API will be removed in a future version. Use 'getConfiguration' API instead.
+     */
+
+    public function getConfig(array $params = [])
+    {
+        return $this->getConfiguration($params);
+    }
+
+    /**
+     * Proxy function to patchConfig() to prevent BC break.
+     * This API will be removed in a future version. Use 'patchConfiguration' API instead.
+     */
+    public function patchConfig(array $params = [])
+    {
+        $ops = $this->extractArgument($params, 'ops');
+        if ($ops !== null) {
+            $params['body'] = $ops;
+        }
+        return $this->patchConfiguration($params);
+    }
+
+    /**
+     * Proxy function to updateDistinguishedNames() to prevent BC break.
+     * This API will be removed in a future version. Use 'updateDistinguishedName' API instead.
+     */
+    public function updateDistinguishedNames(array $params = [])
+    {
+        return $this->updateDistinguishedName($params);
     }
 }
