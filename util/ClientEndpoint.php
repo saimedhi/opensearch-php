@@ -47,6 +47,17 @@ class ClientEndpoint extends NamespaceEndpoint
         }
         $class = file_get_contents(self::CLIENT_CLASS_TEMPLATE);
         // use Namespace
+        echo ".................??????????...................\n";
+        print_r($this->namespace);
+        echo ".................??????????...................\n";
+        $patchnamespaces = ['async_search', 'searchable_snapshots', 'ssl', 'sql', 'data_frame_transform_deprecated', 'monitoring', 'machine_learning'];
+
+        // Merge patch namespaces, make unique, and sort
+        $this->namespace = array_unique(array_merge($this->namespace, $patchnamespaces));
+        print_r($this->namespace);
+        sort($this->namespace);
+        print_r($this->namespace);
+
         $useNamespace = '';
         foreach ($this->namespace as $name) {
             if (empty($name)) {
