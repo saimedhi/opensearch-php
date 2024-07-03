@@ -4,7 +4,7 @@ return <<<'EOD'
 
     /**
      * Retrieves roles. Only accessible to super-admins and with rest-api permissions when enabled.
-     * If 'role' is provided in $params, calls GetRole.
+     * If 'role' is provided in $params, calls getRole.
      *
      * $params['role']        = (string) Name of the role.
      * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.

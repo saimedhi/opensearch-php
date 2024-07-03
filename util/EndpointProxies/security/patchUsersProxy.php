@@ -3,10 +3,9 @@
 return <<<'EOD'
 
     /**
-     * Retrieve all internal users.
-     * If 'username' is provided in $params, calls 'getUser'.
+     * Creates, updates, or deletes multiple internal users in a single call.
+     * If 'username' is provided in $params, calls patchUser.
      *
-     * $params['username']    = (string) The username of the user to fetch, omit to fetch all (optional).
      * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
      * $params['human']       = (boolean) Whether to return human readable values for statistics.
      * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
@@ -16,18 +15,23 @@ return <<<'EOD'
      * @param array $params Associative array of parameters
      * @return array
      */
-    public function getUsers(array $params = []): array
+    public function patchUsers(array $params = [])
     {
-        $endpointBuilder = $this->endpoints;
+        $body = $this->extractArgument($params, 'body');
+        if ($body ===null) {
+            $body = $this->extractArgument($params, 'ops') ?? [];
+        }
 
+        $endpointBuilder = $this->endpoints;
         if (isset($params['username'])) {
-            $endpoint = $endpointBuilder('Security\GetUser');
+            $endpoint = $endpointBuilder('Security\PatchUser');
             $endpoint->setUsername($params['username']);
-        } else {
-            $endpoint = $endpointBuilder('Security\GetUsers');
+        } else { 
+            $endpoint = $endpointBuilder('Security\PatchUsers');
         }
 
         $endpoint->setParams($params);
+        $endpoint->setBody($body);
 
         return $this->performRequest($endpoint);
     }
