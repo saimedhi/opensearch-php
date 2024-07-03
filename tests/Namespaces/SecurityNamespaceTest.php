@@ -542,7 +542,7 @@ class SecurityNamespaceTest extends TestCase
     public function testGetActionGroups(): void
     {
         $this->transport->method('performRequest')
-            ->with('GET', '/_plugins/_security/api/actiongroups/my_test_action_group', [], null);
+            ->with('GET', '/_plugins/_security/api/actiongroups', [], null);
         $this->transport->method('resultOrFuture')
             ->willReturn([
                 'resource' => ['test_resource'],
