@@ -313,12 +313,17 @@ foreach ($files as $entry) {
     foreach ($entry as $key => $api) {
 
         printf("Generating %s...\n", $key);
-        if ($key === "cluster.get_component_template") {
-            print_r($api);
-        }
-        if ($key === "cat.allocation") {
-            print_r($api);
-        }
+        // $param_proxy = require __DIR__ . '/deprecated_params_proxy.php';
+
+        // if (isset($param_proxy[$key])) {
+        //     foreach ($param_proxy[$key] as $paramKey => $paramValue) {
+        //         $entry[$key]['params'][$paramKey] = $paramValue;
+        //     }
+        // }
+        // if ($key === "security.change_password") {
+        //     print_r($entry);
+        // }
+
         $entry_json = json_encode($entry);
         $endpoint = new Endpoint($key . '.json', $entry_json);
 
