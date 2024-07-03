@@ -23,6 +23,7 @@ return <<<'EOD'
         if (isset($params['cluster_name'])) {
             $endpoint = $endpointBuilder('Security\GetDistinguishedName');
             $endpoint->setClusterName($params['cluster_name']);
+            unset($params['cluster_name']);
         } else {
             $endpoint = $endpointBuilder('Security\GetDistinguishedNames');
         }

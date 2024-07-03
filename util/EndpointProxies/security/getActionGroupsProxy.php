@@ -21,6 +21,7 @@ public function getActionGroups(array $params = [])
     if (isset($params['action_group'])) {
         $endpoint = $endpointBuilder('Security\GetActionGroup');
         $endpoint->setActionGroup($params['action_group']);
+        unset($params['action_group']);
     } else {
         $endpoint = $endpointBuilder('Security\GetActionGroups');
     }

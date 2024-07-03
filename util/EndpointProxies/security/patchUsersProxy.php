@@ -26,6 +26,7 @@ return <<<'EOD'
         if (isset($params['username'])) {
             $endpoint = $endpointBuilder('Security\PatchUser');
             $endpoint->setUsername($params['username']);
+            unset($params['username']);
         } else { 
             $endpoint = $endpointBuilder('Security\PatchUsers');
         }

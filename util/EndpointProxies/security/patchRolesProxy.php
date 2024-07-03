@@ -25,7 +25,8 @@ return <<<'EOD'
         $endpointBuilder = $this->endpoints;
         if (isset($params['role'])) {
             $endpoint = $endpointBuilder('Security\PatchRole');
-            $endpoint->setRole($params['username']);
+            $endpoint->setRole($params['role']);
+            unset($params['role']);
         } else { 
             $endpoint = $endpointBuilder('Security\PatchRoles');
         }

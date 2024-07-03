@@ -26,6 +26,7 @@ return <<<'EOD'
         if (isset($params['action_group'])) {
             $endpoint = $endpointBuilder('Security\PatchActionGroup');
             $endpoint->setActionGroup($params['action_group']);
+            unset($params['action_group']);
         } else { 
             $endpoint = $endpointBuilder('Security\PatchActionGroups');
         }

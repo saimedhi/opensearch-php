@@ -22,6 +22,7 @@ return <<<'EOD'
         if (isset($params['role'])) {
             $endpoint = $endpointBuilder('Security\GetRole');
             $endpoint->setRole($params['role']);
+            unset($params['role']);
         } else {
             $endpoint = $endpointBuilder('Security\GetRoles');
         }

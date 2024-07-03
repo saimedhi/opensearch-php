@@ -22,6 +22,7 @@ return <<<'EOD'
         if (isset($params['tenant'])) {
             $endpoint = $endpointBuilder('Security\GetTenant');
             $endpoint->setTenant($params['tenant']);
+            unset($params['tenant']);
         } else {
             $endpoint = $endpointBuilder('Security\GetTenants');
         }
