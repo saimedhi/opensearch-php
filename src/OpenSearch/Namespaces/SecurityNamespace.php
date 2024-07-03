@@ -1575,6 +1575,7 @@ class SecurityNamespace extends AbstractNamespace
         if (isset($params['action_group'])) {
             $endpoint = $endpointBuilder('Security\GetActionGroup');
             $endpoint->setActionGroup($params['action_group']);
+            unset($params['action_group']);
         } else {
             $endpoint = $endpointBuilder('Security\GetActionGroups');
         }
@@ -1612,6 +1613,7 @@ class SecurityNamespace extends AbstractNamespace
         if (isset($params['cluster_name'])) {
             $endpoint = $endpointBuilder('Security\GetDistinguishedName');
             $endpoint->setClusterName($params['cluster_name']);
+            unset($params['cluster_name']);
         } else {
             $endpoint = $endpointBuilder('Security\GetDistinguishedNames');
         }
@@ -1639,6 +1641,7 @@ class SecurityNamespace extends AbstractNamespace
         if (isset($params['role'])) {
             $endpoint = $endpointBuilder('Security\GetRoleMapping');
             $endpoint->setRole($params['role']);
+            unset($params['role']);
         } else {
             $endpoint = $endpointBuilder('Security\GetRoleMappings');
         }
@@ -1666,6 +1669,7 @@ class SecurityNamespace extends AbstractNamespace
         if (isset($params['role'])) {
             $endpoint = $endpointBuilder('Security\GetRole');
             $endpoint->setRole($params['role']);
+            unset($params['role']);
         } else {
             $endpoint = $endpointBuilder('Security\GetRoles');
         }
@@ -1693,6 +1697,7 @@ class SecurityNamespace extends AbstractNamespace
         if (isset($params['tenant'])) {
             $endpoint = $endpointBuilder('Security\GetTenant');
             $endpoint->setTenant($params['tenant']);
+            unset($params['tenant']);
         } else {
             $endpoint = $endpointBuilder('Security\GetTenants');
         }
@@ -1721,6 +1726,7 @@ class SecurityNamespace extends AbstractNamespace
         if (isset($params['username'])) {
             $endpoint = $endpointBuilder('Security\GetUser');
             $endpoint->setUsername($params['username']);
+            unset($params['username']);
         } else {
             $endpoint = $endpointBuilder('Security\GetUsers');
         }
@@ -1753,6 +1759,7 @@ class SecurityNamespace extends AbstractNamespace
         if (isset($params['action_group'])) {
             $endpoint = $endpointBuilder('Security\PatchActionGroup');
             $endpoint->setActionGroup($params['action_group']);
+            unset($params['action_group']);
         } else {
             $endpoint = $endpointBuilder('Security\PatchActionGroups');
         }
@@ -1797,7 +1804,8 @@ class SecurityNamespace extends AbstractNamespace
         $endpointBuilder = $this->endpoints;
         if (isset($params['role'])) {
             $endpoint = $endpointBuilder('Security\PatchRoleMapping');
-            $endpoint->setRole($params['username']);
+            $endpoint->setRole($params['role']);
+            unset($params['role']);
         } else {
             $endpoint = $endpointBuilder('Security\PatchRoleMappings');
         }
@@ -1829,7 +1837,8 @@ class SecurityNamespace extends AbstractNamespace
         $endpointBuilder = $this->endpoints;
         if (isset($params['role'])) {
             $endpoint = $endpointBuilder('Security\PatchRole');
-            $endpoint->setRole($params['username']);
+            $endpoint->setRole($params['role']);
+            unset($params['role']);
         } else {
             $endpoint = $endpointBuilder('Security\PatchRoles');
         }
@@ -1863,6 +1872,7 @@ class SecurityNamespace extends AbstractNamespace
         if (isset($params['tenant'])) {
             $endpoint = $endpointBuilder('Security\PatchTenant');
             $endpoint->setTenant($params['tenant']);
+            unset($params['tenant']);
         } else {
             $endpoint = $endpointBuilder('Security\PatchTenants');
         }
@@ -1896,6 +1906,7 @@ class SecurityNamespace extends AbstractNamespace
         if (isset($params['username'])) {
             $endpoint = $endpointBuilder('Security\PatchUser');
             $endpoint->setUsername($params['username']);
+            unset($params['username']);
         } else {
             $endpoint = $endpointBuilder('Security\PatchUsers');
         }
