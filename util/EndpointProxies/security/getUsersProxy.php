@@ -31,4 +31,3 @@ return <<<'EOD'
         return $this->performRequest($endpoint);
     }
 EOD;
-?>
