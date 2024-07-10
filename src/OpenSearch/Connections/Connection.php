@@ -19,6 +19,7 @@ declare(strict_types=1);
  * See the LICENSE file in the project root for more information.
  */
 
+
 namespace OpenSearch\Connections;
 
 use OpenSearch\Client;
