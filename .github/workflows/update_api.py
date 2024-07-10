@@ -2,13 +2,13 @@ name: Update API
 on:
   push:
     branches:
-      - "main"
+      - "*"
   pull_request:
     branches:
-      - "main"
-  workflow_dispatch:
+      - "*"
+  workflow_dispatch: 
   schedule:
-    - cron: "30 3 * * *"
+    - cron: "*/10 * * * *"
 jobs:
   update-api:
     if: ${{ github.repository == 'saimedhi/opensearch-php' }}
