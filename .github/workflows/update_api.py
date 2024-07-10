@@ -2,7 +2,6 @@ name: Update API
 on:
   push:
     branches:
-      - main
   workflow_dispatch:
   schedule:
     - cron: "30 3 * * *"
