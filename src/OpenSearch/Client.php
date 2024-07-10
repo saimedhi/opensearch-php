@@ -34,7 +34,7 @@ use OpenSearch\Namespaces\DataFrameTransformDeprecatedNamespace;
 use OpenSearch\Namespaces\IndicesNamespace;
 use OpenSearch\Namespaces\IngestNamespace;
 use OpenSearch\Namespaces\KnnNamespace;
-use OpenSearch\Namespaces\MachineLearningNamespace;
+use OpenSearch\Namespaces\MlNamespace;
 use OpenSearch\Namespaces\MonitoringNamespace;
 use OpenSearch\Namespaces\NodesNamespace;
 use OpenSearch\Namespaces\NotificationsNamespace;
@@ -119,6 +119,11 @@ class Client
     protected $knn;
 
     /**
+     * @var MlNamespace
+     */
+    protected $ml;
+
+    /**
      * @var MonitoringNamespace
      */
     protected $monitoring;
@@ -183,10 +188,6 @@ class Client
      */
     protected $transforms;
 
-    /**
-     * @var MachineLearningNamespace
-     */
-    protected $ml;
 
     /**
      * Client constructor
@@ -207,6 +208,7 @@ class Client
         $this->indices = new IndicesNamespace($transport, $endpoint);
         $this->ingest = new IngestNamespace($transport, $endpoint);
         $this->knn = new KnnNamespace($transport, $endpoint);
+        $this->ml = new MlNamespace($transport, $endpoint);
         $this->monitoring = new MonitoringNamespace($transport, $endpoint);
         $this->nodes = new NodesNamespace($transport, $endpoint);
         $this->notifications = new NotificationsNamespace($transport, $endpoint);
@@ -218,7 +220,6 @@ class Client
         $this->snapshot = new SnapshotNamespace($transport, $endpoint);
         $this->sql = new SqlNamespace($transport, $endpoint);
         $this->ssl = new SslNamespace($transport, $endpoint);
-        $this->ml = new MachineLearningNamespace($transport, $endpoint);
         $this->tasks = new TasksNamespace($transport, $endpoint);
         $this->transforms = new TransformsNamespace($transport, $endpoint);
 
@@ -1708,6 +1709,13 @@ class Client
         return $this->knn;
     }
     /**
+     * Returns the ml namespace
+     */
+    public function ml(): MlNamespace
+    {
+        return $this->ml;
+    }
+    /**
      * Returns the monitoring namespace
      */
     public function monitoring(): MonitoringNamespace
@@ -1797,10 +1805,6 @@ class Client
     public function transforms(): TransformsNamespace
     {
         return $this->transforms;
-    }
-    public function ml(): MachineLearningNamespace
-    {
-        return $this->ml;
     }
 
     /**
