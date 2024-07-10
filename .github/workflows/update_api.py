@@ -1,4 +1,4 @@
-name: Update API 
+name: update trail
 
 on:
   push:
@@ -7,49 +7,72 @@ on:
   pull_request:
     branches:
       - "main"
-    
+
 jobs:
-  update-api:
+  test:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
+    strategy:
+      fail-fast: false
+      matrix:
+        opensearch_ref: [ '1.x', '2.x', '2.0', 'main' ]
     steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: recursive
-          fetch-depth: 0
-      - name: Config git to rebase
-        run: git config --global pull.rebase true
-      - name: Setup PHP 8.3
+      - name: Checkout PHP Client
+        uses: actions/checkout@v2
+
+      - name: Use PHP 8.2
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3.6' 
-          tools: composer:v2.7.2
+          php-version: 8.2
+          extensions: yaml, zip, curl
         env:
           COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
       - name: Install dependencies
-        run: composer install
-      - name: Generate API
-        run: php util/GenerateEndpoints.php
-      - name: Format
-        run: composer run php-cs 
-      - name: Get current date
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
-      - name: Create pull request
-        id: cpr
-        uses: peter-evans/create-pull-request@v5
-        with:
-          commit-message: Updated opensearch-php to reflect the latest OpenSearch API spec (${{ steps.date.outputs.date }})
-          title: Updated opensearch-php to reflect the latest OpenSearch API spec
-          body: |
-            Updated [opensearch-php](https://github.com/opensearch-project/opensearch-php) to reflect the latest [OpenSearch API spec](https://github.com/opensearch-project/opensearch-api-specification/releases/download/main-latest/opensearch-openapi.yaml)
-            Date: ${{ steps.date.outputs.date }}
-          branch: automated-api-update
-          base: main
-          signoff: true
-          labels: |
-              autocut
+        run: |
+          composer install --prefer-dist
 
-              
+      - name: Checkout OpenSearch
+        uses: actions/checkout@v3
+        with:
+          repository: opensearch-project/OpenSearch
+          ref: ${{ matrix.opensearch_ref }}
+          path: opensearch
+
+      - name: Get OpenSearch branch top
+        id: get-key
+        working-directory: opensearch
+        run: echo key=`git log -1 --format='%H'` >> $GITHUB_OUTPUT
+
+      - name: Restore cached build
+        id: cache-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: opensearch/distribution/archives/linux-tar/build/distributions
+          key: ${{ steps.get-key.outputs.key }}
+
+      - name: Assemble OpenSearch
+        if: steps.cache-restore.outputs.cache-hit != 'true'
+        working-directory: opensearch
+        run: ./gradlew :distribution:archives:linux-tar:assemble
+
+      - name: Save cached build
+        if: steps.cache-restore.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v3
+        with:
+          path: opensearch/distribution/archives/linux-tar/build/distributions
+          key: ${{ steps.get-key.outputs.key }}
+
+      - name: Run OpenSearch
+        working-directory: opensearch/distribution/archives/linux-tar/build/distributions
+        run: |
+          tar xf opensearch-min-*
+          ./opensearch-*/bin/opensearch -d
+      
+      - name: Wait for Search server
+        run: php ./.github/wait_for_opensearch.php
+
+      - name: Integration tests
+        run: |
+          composer run integration
+        env:
+          OPENSEARCH_URL: 'http://localhost:9200'
