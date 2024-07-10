@@ -1,17 +1,15 @@
 name: Update API 
+
 on:
   push:
     branches:
-      - "*"
+      - "main"
   pull_request:
     branches:
-      - "*"
-  workflow_dispatch: 
-  schedule:
-    - cron: "*/10 * * * *"
+      - "main"
+    
 jobs:
   update-api:
-    if: ${{ github.repository == 'saimedhi/opensearch-php' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
