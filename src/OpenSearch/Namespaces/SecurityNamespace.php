@@ -87,6 +87,29 @@ class SecurityNamespace extends AbstractNamespace
         return $this->performRequest($endpoint);
     }
     /**
+     * Changes the password for the current user.
+     *
+     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
+     * $params['human']       = (boolean) Whether to return human readable values for statistics.
+     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
+     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
+     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
+     *
+     * @param array $params Associative array of parameters
+     * @return array
+     */
+    public function changePassword(array $params = [])
+    {
+        $body = $this->extractArgument($params, 'body');
+
+        $endpointBuilder = $this->endpoints;
+        $endpoint = $endpointBuilder('Security\ChangePassword');
+        $endpoint->setParams($params);
+        $endpoint->setBody($body);
+
+        return $this->performRequest($endpoint);
+    }
+    /**
      * Check whether or not an upgrade can be performed and what resources can be updated.
      *
      * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
@@ -130,6 +153,32 @@ class SecurityNamespace extends AbstractNamespace
         return $this->performRequest($endpoint);
     }
     /**
+     * Creates or replaces the specified action group.
+     *
+     * $params['action_group'] = (string) The name of the action group to create or replace. (Required)
+     * $params['pretty']       = (boolean) Whether to pretty format the returned JSON response.
+     * $params['human']        = (boolean) Whether to return human readable values for statistics.
+     * $params['error_trace']  = (boolean) Whether to include the stack trace of returned errors.
+     * $params['source']       = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
+     * $params['filter_path']  = (any) Comma-separated list of filters used to reduce the response.
+     *
+     * @param array $params Associative array of parameters
+     * @return array
+     */
+    public function createActionGroup(array $params = [])
+    {
+        $action_group = $this->extractArgument($params, 'action_group');
+        $body = $this->extractArgument($params, 'body');
+
+        $endpointBuilder = $this->endpoints;
+        $endpoint = $endpointBuilder('Security\CreateActionGroup');
+        $endpoint->setParams($params);
+        $endpoint->setActionGroup($action_group);
+        $endpoint->setBody($body);
+
+        return $this->performRequest($endpoint);
+    }
+    /**
      * Creates or replaces the allowlisted APIs. Accessible via Super Admin certificate or REST API permission.
      *
      * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
@@ -153,6 +202,84 @@ class SecurityNamespace extends AbstractNamespace
         return $this->performRequest($endpoint);
     }
     /**
+     * Creates or replaces the specified role.
+     *
+     * $params['role']        = (string)  (Required)
+     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
+     * $params['human']       = (boolean) Whether to return human readable values for statistics.
+     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
+     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
+     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
+     *
+     * @param array $params Associative array of parameters
+     * @return array
+     */
+    public function createRole(array $params = [])
+    {
+        $role = $this->extractArgument($params, 'role');
+        $body = $this->extractArgument($params, 'body');
+
+        $endpointBuilder = $this->endpoints;
+        $endpoint = $endpointBuilder('Security\CreateRole');
+        $endpoint->setParams($params);
+        $endpoint->setRole($role);
+        $endpoint->setBody($body);
+
+        return $this->performRequest($endpoint);
+    }
+    /**
+     * Creates or replaces the specified role mapping.
+     *
+     * $params['role']        = (string)  (Required)
+     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
+     * $params['human']       = (boolean) Whether to return human readable values for statistics.
+     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
+     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
+     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
+     *
+     * @param array $params Associative array of parameters
+     * @return array
+     */
+    public function createRoleMapping(array $params = [])
+    {
+        $role = $this->extractArgument($params, 'role');
+        $body = $this->extractArgument($params, 'body');
+
+        $endpointBuilder = $this->endpoints;
+        $endpoint = $endpointBuilder('Security\CreateRoleMapping');
+        $endpoint->setParams($params);
+        $endpoint->setRole($role);
+        $endpoint->setBody($body);
+
+        return $this->performRequest($endpoint);
+    }
+    /**
+     * Creates or replaces the specified tenant.
+     *
+     * $params['tenant']      = (string)  (Required)
+     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
+     * $params['human']       = (boolean) Whether to return human readable values for statistics.
+     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
+     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
+     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
+     *
+     * @param array $params Associative array of parameters
+     * @return array
+     */
+    public function createTenant(array $params = [])
+    {
+        $tenant = $this->extractArgument($params, 'tenant');
+        $body = $this->extractArgument($params, 'body');
+
+        $endpointBuilder = $this->endpoints;
+        $endpoint = $endpointBuilder('Security\CreateTenant');
+        $endpoint->setParams($params);
+        $endpoint->setTenant($tenant);
+        $endpoint->setBody($body);
+
+        return $this->performRequest($endpoint);
+    }
+    /**
      * Creates or replaces the multi-tenancy configuration. Only accessible to admins and users with REST API permissions.
      *
      * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
@@ -171,6 +298,32 @@ class SecurityNamespace extends AbstractNamespace
         $endpointBuilder = $this->endpoints;
         $endpoint = $endpointBuilder('Security\CreateUpdateTenancyConfig');
         $endpoint->setParams($params);
+        $endpoint->setBody($body);
+
+        return $this->performRequest($endpoint);
+    }
+    /**
+     * Creates or replaces the specified user.
+     *
+     * $params['username']    = (string)  (Required)
+     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
+     * $params['human']       = (boolean) Whether to return human readable values for statistics.
+     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
+     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
+     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
+     *
+     * @param array $params Associative array of parameters
+     * @return array
+     */
+    public function createUser(array $params = [])
+    {
+        $username = $this->extractArgument($params, 'username');
+        $body = $this->extractArgument($params, 'body');
+
+        $endpointBuilder = $this->endpoints;
+        $endpoint = $endpointBuilder('Security\CreateUser');
+        $endpoint->setParams($params);
+        $endpoint->setUsername($username);
         $endpoint->setBody($body);
 
         return $this->performRequest($endpoint);
@@ -505,6 +658,26 @@ class SecurityNamespace extends AbstractNamespace
         return $this->performRequest($endpoint);
     }
     /**
+     * Retrieves all action groups.
+     *
+     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
+     * $params['human']       = (boolean) Whether to return human readable values for statistics.
+     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
+     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
+     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
+     *
+     * @param array $params Associative array of parameters
+     * @return array
+     */
+    public function getActionGroups(array $params = [])
+    {
+        $endpointBuilder = $this->endpoints;
+        $endpoint = $endpointBuilder('Security\GetActionGroups');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+    /**
      * Retrieves the current list of allowed API accessible to normal user.
      *
      * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
@@ -630,6 +803,27 @@ class SecurityNamespace extends AbstractNamespace
         return $this->performRequest($endpoint);
     }
     /**
+     * Retrieves distinguished names. Only accessible to super-admins and with rest-api permissions when enabled.
+     *
+     * $params['show_all']    = (boolean)
+     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
+     * $params['human']       = (boolean) Whether to return human readable values for statistics.
+     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
+     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
+     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
+     *
+     * @param array $params Associative array of parameters
+     * @return array
+     */
+    public function getDistinguishedNames(array $params = [])
+    {
+        $endpointBuilder = $this->endpoints;
+        $endpoint = $endpointBuilder('Security\GetDistinguishedNames');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+    /**
      * Gets the evaluated REST API permissions for the currently logged in user.
      *
      * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
@@ -694,6 +888,46 @@ class SecurityNamespace extends AbstractNamespace
         $endpoint = $endpointBuilder('Security\GetRoleMapping');
         $endpoint->setParams($params);
         $endpoint->setRole($role);
+
+        return $this->performRequest($endpoint);
+    }
+    /**
+     * Retrieves all role mappings.
+     *
+     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
+     * $params['human']       = (boolean) Whether to return human readable values for statistics.
+     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
+     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
+     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
+     *
+     * @param array $params Associative array of parameters
+     * @return array
+     */
+    public function getRoleMappings(array $params = [])
+    {
+        $endpointBuilder = $this->endpoints;
+        $endpoint = $endpointBuilder('Security\GetRoleMappings');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+    /**
+     * Retrieves all roles.
+     *
+     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
+     * $params['human']       = (boolean) Whether to return human readable values for statistics.
+     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
+     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
+     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
+     *
+     * @param array $params Associative array of parameters
+     * @return array
+     */
+    public function getRoles(array $params = [])
+    {
+        $endpointBuilder = $this->endpoints;
+        $endpoint = $endpointBuilder('Security\GetRoles');
+        $endpoint->setParams($params);
 
         return $this->performRequest($endpoint);
     }
@@ -763,6 +997,26 @@ class SecurityNamespace extends AbstractNamespace
         return $this->performRequest($endpoint);
     }
     /**
+     * Retrieves all tenants.
+     *
+     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
+     * $params['human']       = (boolean) Whether to return human readable values for statistics.
+     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
+     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
+     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
+     *
+     * @param array $params Associative array of parameters
+     * @return array
+     */
+    public function getTenants(array $params = [])
+    {
+        $endpointBuilder = $this->endpoints;
+        $endpoint = $endpointBuilder('Security\GetTenants');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+    /**
      * Retrieve one internal user.
      *
      * $params['username']    = (string)  (Required)
@@ -807,6 +1061,26 @@ class SecurityNamespace extends AbstractNamespace
         $endpoint = $endpointBuilder('Security\GetUserLegacy');
         $endpoint->setParams($params);
         $endpoint->setUsername($username);
+
+        return $this->performRequest($endpoint);
+    }
+    /**
+     * Retrieve all internal users.
+     *
+     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
+     * $params['human']       = (boolean) Whether to return human readable values for statistics.
+     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
+     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
+     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
+     *
+     * @param array $params Associative array of parameters
+     * @return array
+     */
+    public function getUsers(array $params = [])
+    {
+        $endpointBuilder = $this->endpoints;
+        $endpoint = $endpointBuilder('Security\GetUsers');
+        $endpoint->setParams($params);
 
         return $this->performRequest($endpoint);
     }
@@ -893,6 +1167,29 @@ class SecurityNamespace extends AbstractNamespace
         $endpoint = $endpointBuilder('Security\PatchActionGroup');
         $endpoint->setParams($params);
         $endpoint->setActionGroup($action_group);
+        $endpoint->setBody($body);
+
+        return $this->performRequest($endpoint);
+    }
+    /**
+     * Creates, updates, or deletes multiple action groups in a single call.
+     *
+     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
+     * $params['human']       = (boolean) Whether to return human readable values for statistics.
+     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
+     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
+     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
+     *
+     * @param array $params Associative array of parameters
+     * @return array
+     */
+    public function patchActionGroups(array $params = [])
+    {
+        $body = $this->extractArgument($params, 'body');
+
+        $endpointBuilder = $this->endpoints;
+        $endpoint = $endpointBuilder('Security\PatchActionGroups');
+        $endpoint->setParams($params);
         $endpoint->setBody($body);
 
         return $this->performRequest($endpoint);
@@ -1068,6 +1365,52 @@ class SecurityNamespace extends AbstractNamespace
         return $this->performRequest($endpoint);
     }
     /**
+     * Creates or updates multiple role mappings in a single call.
+     *
+     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
+     * $params['human']       = (boolean) Whether to return human readable values for statistics.
+     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
+     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
+     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
+     *
+     * @param array $params Associative array of parameters
+     * @return array
+     */
+    public function patchRoleMappings(array $params = [])
+    {
+        $body = $this->extractArgument($params, 'body');
+
+        $endpointBuilder = $this->endpoints;
+        $endpoint = $endpointBuilder('Security\PatchRoleMappings');
+        $endpoint->setParams($params);
+        $endpoint->setBody($body);
+
+        return $this->performRequest($endpoint);
+    }
+    /**
+     * Creates, updates, or deletes multiple roles in a single call.
+     *
+     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
+     * $params['human']       = (boolean) Whether to return human readable values for statistics.
+     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
+     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
+     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
+     *
+     * @param array $params Associative array of parameters
+     * @return array
+     */
+    public function patchRoles(array $params = [])
+    {
+        $body = $this->extractArgument($params, 'body');
+
+        $endpointBuilder = $this->endpoints;
+        $endpoint = $endpointBuilder('Security\PatchRoles');
+        $endpoint->setParams($params);
+        $endpoint->setBody($body);
+
+        return $this->performRequest($endpoint);
+    }
+    /**
      * Add, delete, or modify a single tenant.
      *
      * $params['tenant']      = (string)  (Required)
@@ -1094,6 +1437,29 @@ class SecurityNamespace extends AbstractNamespace
         return $this->performRequest($endpoint);
     }
     /**
+     * Add, delete, or modify multiple tenants in a single call.
+     *
+     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
+     * $params['human']       = (boolean) Whether to return human readable values for statistics.
+     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
+     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
+     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
+     *
+     * @param array $params Associative array of parameters
+     * @return array
+     */
+    public function patchTenants(array $params = [])
+    {
+        $body = $this->extractArgument($params, 'body');
+
+        $endpointBuilder = $this->endpoints;
+        $endpoint = $endpointBuilder('Security\PatchTenants');
+        $endpoint->setParams($params);
+        $endpoint->setBody($body);
+
+        return $this->performRequest($endpoint);
+    }
+    /**
      * Updates individual attributes of an internal user.
      *
      * $params['username']    = (string)  (Required)
@@ -1115,6 +1481,29 @@ class SecurityNamespace extends AbstractNamespace
         $endpoint = $endpointBuilder('Security\PatchUser');
         $endpoint->setParams($params);
         $endpoint->setUsername($username);
+        $endpoint->setBody($body);
+
+        return $this->performRequest($endpoint);
+    }
+    /**
+     * Creates, updates, or deletes multiple internal users in a single call.
+     *
+     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
+     * $params['human']       = (boolean) Whether to return human readable values for statistics.
+     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
+     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
+     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
+     *
+     * @param array $params Associative array of parameters
+     * @return array
+     */
+    public function patchUsers(array $params = [])
+    {
+        $body = $this->extractArgument($params, 'body');
+
+        $endpointBuilder = $this->endpoints;
+        $endpoint = $endpointBuilder('Security\PatchUsers');
+        $endpoint->setParams($params);
         $endpoint->setBody($body);
 
         return $this->performRequest($endpoint);
@@ -1334,605 +1723,5 @@ class SecurityNamespace extends AbstractNamespace
         $endpoint->setParams($params);
 
         return $this->performRequest($endpoint);
-    }
-    /**
-     * Changes the password for the current user.
-     *
-     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
-     * $params['human']       = (boolean) Whether to return human readable values for statistics.
-     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
-     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
-     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
-     * $params['current_password']   = (string) The current password
-     * $params['password']           = (string) New password
-     *
-     * @param array $params Associative array of parameters
-     * @return array
-     */
-    public function changePassword(array $params = [])
-    {
-        $body = $this->extractArgument($params, 'body');
-        if ($body === null) {
-            $body = [
-                'current_password' => $this->extractArgument($params, 'current_password'),
-                'password' => $this->extractArgument($params, 'password'),
-            ];
-        }
-
-        $endpointBuilder = $this->endpoints;
-        $endpoint = $endpointBuilder('Security\ChangePassword');
-        $endpoint->setParams($params);
-        $endpoint->setBody($body);
-
-        return $this->performRequest($endpoint);
-    }
-    /**
-     * Creates or replaces the specified action group.
-     *
-     * $params['action_group'] = (string) The name of the action group to create or replace. (Required)
-     * $params['allowed_actions']    = (array) list of allowed actions
-     * $params['pretty']       = (boolean) Whether to pretty format the returned JSON response.
-     * $params['human']        = (boolean) Whether to return human readable values for statistics.
-     * $params['error_trace']  = (boolean) Whether to include the stack trace of returned errors.
-     * $params['source']       = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
-     * $params['filter_path']  = (any) Comma-separated list of filters used to reduce the response.
-     *
-     * @param array $params Associative array of parameters
-     * @return array
-     */
-    public function createActionGroup(array $params = [])
-    {
-        $action_group = $this->extractArgument($params, 'action_group');
-        $body = $this->extractArgument($params, 'body');
-        if ($body === null) {
-            $body = [
-                'allowed_actions' => $this->extractArgument($params, 'allowed_actions'),
-            ];
-        }
-
-        $endpointBuilder = $this->endpoints;
-        $endpoint = $endpointBuilder('Security\CreateActionGroup');
-        $endpoint->setParams($params);
-        $endpoint->setActionGroup($action_group);
-        $endpoint->setBody($body);
-
-        return $this->performRequest($endpoint);
-    }
-    /**
-     * Creates or replaces the specified role mapping.
-     *
-     * $params['role']        = (string)  (Required)
-     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
-     * $params['human']       = (boolean) Whether to return human readable values for statistics.
-     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
-     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
-     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
-     * $params['backend_roles']  = (array)
-     * $params['hosts']          = (array)
-     * $params['users']          = (array)
-     *
-     * @param array $params Associative array of parameters
-     * @return array
-     */
-    public function createRoleMapping(array $params = [])
-    {
-        $role = $this->extractArgument($params, 'role');
-        $body = $this->extractArgument($params, 'body');
-        if ($body === null) {
-            $body = array_filter([
-                'backend_roles' => $this->extractArgument($params, 'backend_roles'),
-                'hosts' => $this->extractArgument($params, 'hosts'),
-                'users' => $this->extractArgument($params, 'users'),
-            ]);
-        }
-
-        $endpointBuilder = $this->endpoints;
-        $endpoint = $endpointBuilder('Security\CreateRoleMapping');
-        $endpoint->setParams($params);
-        $endpoint->setRole($role);
-        $endpoint->setBody($body);
-
-        return $this->performRequest($endpoint);
-    }
-    /**
-     * Creates or replaces the specified role.
-     *
-     * $params['role']        = (string)  (Required)
-     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
-     * $params['human']       = (boolean) Whether to return human readable values for statistics.
-     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
-     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
-     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
-     * $params['cluster_permissions']  = (array)
-     * $params['index_permissions']    = (array)
-     * $params['tenant_permissions']   = (array)
-     *
-     * @param array $params Associative array of parameters
-     * @return array
-     */
-    public function createRole(array $params = [])
-    {
-        $role = $this->extractArgument($params, 'role');
-        $body = $this->extractArgument($params, 'body');
-        if ($body === null) {
-            $body = array_filter([
-                'cluster_permissions' => $this->extractArgument($params, 'cluster_permissions'),
-                'index_permissions' => $this->extractArgument($params, 'index_permissions'),
-                'tenant_permissions' => $this->extractArgument($params, 'tenant_permissions'),
-            ]);
-        }
-
-        $endpointBuilder = $this->endpoints;
-        $endpoint = $endpointBuilder('Security\CreateRole');
-        $endpoint->setParams($params);
-        $endpoint->setRole($role);
-        $endpoint->setBody($body);
-
-        return $this->performRequest($endpoint);
-    }
-    /**
-     * Creates or replaces the specified tenant.
-     *
-     * $params['tenant']      = (string) The name of the tenant to create
-     * $params['description'] = (string) Description of the tenant
-     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
-     * $params['human']       = (boolean) Whether to return human readable values for statistics.
-     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
-     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
-     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
-     *
-     * @param array $params Associative array of parameters
-     * @return array
-     */
-    public function createTenant(array $params = [])
-    {
-        $tenant = $this->extractArgument($params, 'tenant');
-        $body = $this->extractArgument($params, 'body');
-        if ($body === null) {
-            $body = [
-                'description' => $this->extractArgument($params, 'description'),
-            ];
-        }
-
-        $endpointBuilder = $this->endpoints;
-        $endpoint = $endpointBuilder('Security\CreateTenant');
-        $endpoint->setParams($params);
-        $endpoint->setTenant($tenant);
-        $endpoint->setBody($body);
-
-        return $this->performRequest($endpoint);
-    }
-    /**
-     * Creates or replaces the specified user.
-     *
-     * $params['username']    = (string)  (Required)
-     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
-     * $params['human']       = (boolean) Whether to return human readable values for statistics.
-     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
-     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
-     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
-     * $params['password']                   = (string)
-     * $params['opendistro_security_roles']  = (array)
-     * $params['backend_roles']              = (array)
-     * $params['attributes']                 = (array)
-     *
-     * @param array $params Associative array of parameters
-     * @return array
-     */
-    public function createUser(array $params = [])
-    {
-        $username = $this->extractArgument($params, 'username');
-        $body = $this->extractArgument($params, 'body');
-        if ($body === null) {
-            $body = array_filter([
-                'password' => $this->extractArgument($params, 'password'),
-                'opendistro_security_roles' => $this->extractArgument($params, 'opendistro_security_roles'),
-                'backend_roles' => $this->extractArgument($params, 'backend_roles'),
-                'attributes' => $this->extractArgument($params, 'attributes'),
-            ]);
-        }
-
-        $endpointBuilder = $this->endpoints;
-        $endpoint = $endpointBuilder('Security\CreateUser');
-        $endpoint->setParams($params);
-        $endpoint->setUsername($username);
-        $endpoint->setBody($body);
-
-        return $this->performRequest($endpoint);
-    }
-    /**
-     * Proxy function to deleteDistinguishedNames() to prevent BC break.
-     * This API will be removed in a future version. Use 'deleteDistinguishedName' API instead.
-     */
-    public function deleteDistinguishedNames(array $params = [])
-    {
-        return $this->deleteDistinguishedName($params);
-    }
-    /**
-     * Proxy function to getAccount() to prevent BC break.
-     * This API will be removed in a future version. Use 'getAccountDetails' API instead.
-     */
-    public function getAccount(array $params = [])
-    {
-        return $this->getAccountDetails($params);
-    }
-    /**
-     * Retrieves all action groups.
-     * If 'action_group' is provided in $params, calls 'getActionGroup'.
-     *
-     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
-     * $params['human']       = (boolean) Whether to return human readable values for statistics.
-     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
-     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
-     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
-     *
-     * @param array $params Associative array of parameters
-     * @return array
-     */
-    public function getActionGroups(array $params = [])
-    {
-        $endpointBuilder = $this->endpoints;
-        if (isset($params['action_group'])) {
-            $endpoint = $endpointBuilder('Security\GetActionGroup');
-            $action_group = $this->extractArgument($params, 'action_group');
-            $endpoint->setActionGroup($action_group);
-        } else {
-            $endpoint = $endpointBuilder('Security\GetActionGroups');
-        }
-        $endpoint->setParams($params);
-
-        return $this->performRequest($endpoint);
-    }
-    /**
-     * Proxy function to getConfig() to prevent BC break.
-     * This API will be removed in a future version. Use 'getConfiguration' API instead.
-     */
-    public function getConfig(array $params = [])
-    {
-        return $this->getConfiguration($params);
-    }
-    /**
-     * Retrieves distinguished names. Only accessible to super-admins and with rest-api permissions when enabled.
-     * If 'cluster_name' is provided in $params, calls GetDistinguishedName.
-     *
-     * $params['cluster_name'] = (string) Name of the cluster.
-     * $params['show_all']     = (boolean) Show all DN.
-     * $params['pretty']       = (boolean) Whether to pretty format the returned JSON response.
-     * $params['human']        = (boolean) Whether to return human readable values for statistics.
-     * $params['error_trace']  = (boolean) Whether to include the stack trace of returned errors.
-     * $params['source']       = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
-     * $params['filter_path']  = (any) Comma-separated list of filters used to reduce the response.
-     *
-     * @param array $params Associative array of parameters
-     * @return array
-     */
-    public function getDistinguishedNames(array $params = [])
-    {
-        $endpointBuilder = $this->endpoints;
-        if (isset($params['cluster_name'])) {
-            $endpoint = $endpointBuilder('Security\GetDistinguishedName');
-            $cluster_name = $this->extractArgument($params, 'cluster_name');
-            $endpoint->setClusterName($cluster_name);
-        } else {
-            $endpoint = $endpointBuilder('Security\GetDistinguishedNames');
-        }
-        $endpoint->setParams($params);
-
-        return $this->performRequest($endpoint);
-    }
-    /**
-     * Retrieves role mappings. Only accessible to super-admins and with rest-api permissions when enabled.
-     * If 'role' is provided in $params, calls GetRoleMapping.
-     *
-     * $params['role']        = (string) Name of the role.
-     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
-     * $params['human']       = (boolean) Whether to return human readable values for statistics.
-     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
-     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
-     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
-     *
-     * @param array $params Associative array of parameters
-     * @return array
-     */
-    public function getRoleMappings(array $params = [])
-    {
-        $endpointBuilder = $this->endpoints;
-        if (isset($params['role'])) {
-            $endpoint = $endpointBuilder('Security\GetRoleMapping');
-            $role = $this->extractArgument($params, 'role');
-            $endpoint->setRole($role);
-        } else {
-            $endpoint = $endpointBuilder('Security\GetRoleMappings');
-        }
-        $endpoint->setParams($params);
-
-        return $this->performRequest($endpoint);
-    }
-    /**
-     * Retrieves roles. Only accessible to super-admins and with rest-api permissions when enabled.
-     * If 'role' is provided in $params, calls getRole.
-     *
-     * $params['role']        = (string) Name of the role.
-     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
-     * $params['human']       = (boolean) Whether to return human readable values for statistics.
-     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
-     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
-     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
-     *
-     * @param array $params Associative array of parameters
-     * @return array
-     */
-    public function getRoles(array $params = [])
-    {
-        $endpointBuilder = $this->endpoints;
-        if (isset($params['role'])) {
-            $endpoint = $endpointBuilder('Security\GetRole');
-            $role = $this->extractArgument($params, 'role');
-            $endpoint->setRole($role);
-        } else {
-            $endpoint = $endpointBuilder('Security\GetRoles');
-        }
-        $endpoint->setParams($params);
-
-        return $this->performRequest($endpoint);
-    }
-    /**
-     * Retrieves tenants. Only accessible to super-admins and with rest-api permissions when enabled.
-     * If 'tenant' is provided in $params, calls GetTenant.
-     *
-     * $params['tenant']      = (string) Name of the tenant.
-     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
-     * $params['human']       = (boolean) Whether to return human readable values for statistics.
-     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
-     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
-     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
-     *
-     * @param array $params Associative array of parameters
-     * @return array
-     */
-    public function getTenants(array $params = [])
-    {
-        $endpointBuilder = $this->endpoints;
-        if (isset($params['tenant'])) {
-            $endpoint = $endpointBuilder('Security\GetTenant');
-            $tenant = $this->extractArgument($params, 'tenant');
-            $endpoint->setTenant($tenant);
-        } else {
-            $endpoint = $endpointBuilder('Security\GetTenants');
-        }
-        $endpoint->setParams($params);
-
-        return $this->performRequest($endpoint);
-    }
-    /**
-     * Retrieve all internal users.
-     * If 'username' is provided in $params, calls 'getUser'.
-     *
-     * $params['username']    = (string) The username of the user to fetch, omit to fetch all (optional).
-     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
-     * $params['human']       = (boolean) Whether to return human readable values for statistics.
-     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
-     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
-     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
-     *
-     * @param array $params Associative array of parameters
-     * @return array
-     */
-    public function getUsers(array $params = []): array
-    {
-        $endpointBuilder = $this->endpoints;
-
-        if (isset($params['username'])) {
-            $endpoint = $endpointBuilder('Security\GetUser');
-            $username = $this->extractArgument($params, 'username');
-            $endpoint->setUsername($username);
-        } else {
-            $endpoint = $endpointBuilder('Security\GetUsers');
-        }
-
-        $endpoint->setParams($params);
-
-        return $this->performRequest($endpoint);
-    }
-    /**
-     * Creates, updates, or deletes multiple action groups in a single call.
-     * If 'action_group' is provided in $params, calls patchActionGroup.
-     *
-     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
-     * $params['human']       = (boolean) Whether to return human readable values for statistics.
-     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
-     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
-     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
-     *
-     * @param array $params Associative array of parameters
-     * @return array
-     */
-    public function patchActionGroups(array $params = [])
-    {
-        $body = $this->extractArgument($params, 'body');
-
-        if ($body === null) {
-            $body = $this->extractArgument($params, 'ops') ?? [];
-        }
-
-        $endpointBuilder = $this->endpoints;
-        if (isset($params['action_group'])) {
-            $endpoint = $endpointBuilder('Security\PatchActionGroup');
-            $action_group = $this->extractArgument($params, 'action_group');
-            $endpoint->setActionGroup($action_group);
-        } else {
-            $endpoint = $endpointBuilder('Security\PatchActionGroups');
-        }
-        $endpoint->setParams($params);
-        $endpoint->setBody($body);
-
-        return $this->performRequest($endpoint);
-    }
-    /**
-     * Proxy function to patchConfig() to prevent BC break.
-     * This API will be removed in a future version. Use 'patchConfiguration' API instead.
-     */
-    public function patchConfig(array $params = [])
-    {
-        $ops = $this->extractArgument($params, 'ops');
-        if ($ops !== null) {
-            $params['body'] = $ops;
-        }
-        return $this->patchConfiguration($params);
-    }
-    /**
-     * Creates or updates multiple role mappings in a single call.
-     *  If 'role' is provided in $params, calls patchRoleMappings.
-     *
-     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
-     * $params['human']       = (boolean) Whether to return human readable values for statistics.
-     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
-     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
-     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
-     *
-     * @param array $params Associative array of parameters
-     * @return array
-     */
-    public function patchRoleMappings(array $params = [])
-    {
-        $body = $this->extractArgument($params, 'body');
-        if ($body === null) {
-            $body = $this->extractArgument($params, 'ops') ?? [];
-        }
-
-        $endpointBuilder = $this->endpoints;
-        if (isset($params['role'])) {
-            $endpoint = $endpointBuilder('Security\PatchRoleMapping');
-            $role = $this->extractArgument($params, 'role');
-            $endpoint->setRole($role);
-        } else {
-            $endpoint = $endpointBuilder('Security\PatchRoleMappings');
-        }
-        $endpoint->setParams($params);
-        $endpoint->setBody($body);
-
-        return $this->performRequest($endpoint);
-    }
-    /**
-     * Creates, updates, or deletes multiple roles in a single call.
-     * If 'role' is provided in $params, calls patchRole.
-     *
-     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
-     * $params['human']       = (boolean) Whether to return human readable values for statistics.
-     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
-     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
-     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
-     *
-     * @param array $params Associative array of parameters
-     * @return array
-     */
-    public function patchRoles(array $params = [])
-    {
-        $body = $this->extractArgument($params, 'body');
-        if ($body === null) {
-            $body = $this->extractArgument($params, 'ops') ?? [];
-        }
-
-        $endpointBuilder = $this->endpoints;
-        if (isset($params['role'])) {
-            $endpoint = $endpointBuilder('Security\PatchRole');
-            $role = $this->extractArgument($params, 'role');
-            $endpoint->setRole($role);
-        } else {
-            $endpoint = $endpointBuilder('Security\PatchRoles');
-        }
-
-        $endpoint->setParams($params);
-        $endpoint->setBody($body);
-
-        return $this->performRequest($endpoint);
-    }
-    /**
-     * Add, delete, or modify multiple tenants in a single call.
-     * If 'tenant' is provided in $params, calls 'patchTenant'.
-     *
-     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
-     * $params['human']       = (boolean) Whether to return human readable values for statistics.
-     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
-     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
-     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
-     *
-     * @param array $params Associative array of parameters
-     * @return array
-     */
-    public function patchTenants(array $params = [])
-    {
-        $body = $this->extractArgument($params, 'body');
-        if ($body === null) {
-            $body = $this->extractArgument($params, 'ops') ?? [];
-        }
-
-        $endpointBuilder = $this->endpoints;
-        if (isset($params['tenant'])) {
-            $endpoint = $endpointBuilder('Security\PatchTenant');
-            $tenant = $this->extractArgument($params, 'tenant');
-            $endpoint->setTenant($tenant);
-        } else {
-            $endpoint = $endpointBuilder('Security\PatchTenants');
-        }
-
-        $endpoint->setParams($params);
-        $endpoint->setBody($body);
-
-        return $this->performRequest($endpoint);
-    }
-    /**
-     * Creates, updates, or deletes multiple internal users in a single call.
-     * If 'username' is provided in $params, calls patchUser.
-     *
-     * $params['pretty']      = (boolean) Whether to pretty format the returned JSON response.
-     * $params['human']       = (boolean) Whether to return human readable values for statistics.
-     * $params['error_trace'] = (boolean) Whether to include the stack trace of returned errors.
-     * $params['source']      = (string) The URL-encoded request definition. Useful for libraries that do not accept a request body for non-POST requests.
-     * $params['filter_path'] = (any) Comma-separated list of filters used to reduce the response.
-     *
-     * @param array $params Associative array of parameters
-     * @return array
-     */
-    public function patchUsers(array $params = [])
-    {
-        $body = $this->extractArgument($params, 'body');
-        if ($body === null) {
-            $body = $this->extractArgument($params, 'ops') ?? [];
-        }
-
-        $endpointBuilder = $this->endpoints;
-        if (isset($params['username'])) {
-            $endpoint = $endpointBuilder('Security\PatchUser');
-            $username = $this->extractArgument($params, 'username');
-            $endpoint->setUsername($username);
-        } else {
-            $endpoint = $endpointBuilder('Security\PatchUsers');
-        }
-
-        $endpoint->setParams($params);
-        $endpoint->setBody($body);
-
-        return $this->performRequest($endpoint);
-    }
-    /**
-     * Proxy function to updateConfig() to prevent BC break.
-     * This API will be removed in a future version. Use 'updateConfiguration' API instead.
-     */
-    public function updateConfig(array $params = [])
-    {
-        $body = [ 'dynamic' => $this->extractArgument($params, 'dynamic')];
-        $params['body'] = $body;
-        return $this->updateConfiguration($params);
-    }
-    /**
-     * Proxy function to updateDistinguishedNames() to prevent BC break.
-     * This API will be removed in a future version. Use 'updateDistinguishedName' API instead.
-     */
-    public function updateDistinguishedNames(array $params = [])
-    {
-        $body = [ 'nodes_dn' => $this->extractArgument($params, 'nodes_dn')];
-        $params['body'] = $body;
-        return $this->updateDistinguishedName($params);
     }
 }
