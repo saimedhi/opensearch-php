@@ -28,6 +28,8 @@ jobs:
         with:
           php-version: '8.3.6' 
           tools: composer:v2.7.2
+        env:
+          COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install dependencies
         run: composer install
       - name: Generate API
