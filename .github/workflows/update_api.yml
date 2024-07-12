@@ -5,7 +5,7 @@ on:
     - cron: "30 3 * * *"
 jobs:
   update-api:
-    if: ${{ github.repository == 'opensearch-project/opensearch-php' }}
+    if: ${{ github.repository == 'saimedhi/opensearch-php' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
