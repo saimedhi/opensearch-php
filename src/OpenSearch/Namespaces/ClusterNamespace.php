@@ -360,7 +360,7 @@ class ClusterNamespace extends AbstractNamespace
     /**
      * Creates or updates a component template.
      *
-     * $params['name']                    = (string) Name of the component template to create. OpenSearch includes the following built-in component templates: `logs-mappings`; 'logs-settings`; `metrics-mappings`; `metrics-settings`;`synthetics-mapping`; `synthetics-settings`. OpenSearch Agent uses these templates to configure backing indices for its data streams. If you use OpenSearch Agent and want to overwrite one of these templates, set the `version` for your replacement template higher than the current version. If you don’t use OpenSearch Agent and want to disable all built-in component and index templates, set `stack.templates.enabled` to `false` using the cluster update settings API.
+     * $params['name']                    = (string) Name of the component template to create. OpenSearch includes the following built-in component templates: `logs-mappings`; 'logs-settings`; `metrics-mappings`; `metrics-settings`;`synthetics-mapping`; `synthetics-settings`. OpenSearch Agent uses these templates to configure backing indices for its data streams. If you use OpenSearch Agent and want to overwrite one of these templates, set the `version` for your replacement template higher than the current version. If you don't use OpenSearch Agent and want to disable all built-in component and index templates, set `stack.templates.enabled` to `false` using the cluster update settings API.
      * $params['cluster_manager_timeout'] = (string) Operation timeout for connection to cluster-manager node.
      * $params['create']                  = (boolean) If `true`, this request cannot replace or update existing component templates. (Default = false)
      * $params['master_timeout']          = (string) Period to wait for a connection to the master node.If no response is received before the timeout expires, the request fails and returns an error.
@@ -559,7 +559,7 @@ class ClusterNamespace extends AbstractNamespace
      *
      * $params['node_id']       = (array) Comma-separated list of node filters used to limit returned information. Defaults to all nodes in the cluster.
      * $params['flat_settings'] = (boolean) If `true`, returns settings in flat format. (Default = false)
-     * $params['timeout']       = (string) Period to wait for each node to respond.If a node does not respond before its timeout expires, the response does not include its stats.However, timed out nodes are included in the response’s `_nodes.failed` property. Defaults to no timeout.
+     * $params['timeout']       = (string) Period to wait for each node to respond.If a node does not respond before its timeout expires, the response does not include its stats.However, timed out nodes are included in the response's `_nodes.failed` property. Defaults to no timeout.
      * $params['pretty']        = (boolean) Whether to pretty format the returned JSON response.
      * $params['human']         = (boolean) Whether to return human readable values for statistics.
      * $params['error_trace']   = (boolean) Whether to include the stack trace of returned errors.

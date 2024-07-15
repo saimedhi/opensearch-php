@@ -1,0 +1,78 @@
+name: update trail
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "main"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        opensearch_ref: [ '1.x', '2.x', '2.0', 'main' ]
+    steps:
+      - name: Checkout PHP Client
+        uses: actions/checkout@v2
+
+      - name: Use PHP 8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          extensions: yaml, zip, curl
+        env:
+          COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+      - name: Install dependencies
+        run: |
+          composer install --prefer-dist
+
+      - name: Checkout OpenSearch
+        uses: actions/checkout@v3
+        with:
+          repository: opensearch-project/OpenSearch
+          ref: ${{ matrix.opensearch_ref }}
+          path: opensearch
+
+      - name: Get OpenSearch branch top
+        id: get-key
+        working-directory: opensearch
+        run: echo key=`git log -1 --format='%H'` >> $GITHUB_OUTPUT
+
+      - name: Restore cached build
+        id: cache-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: opensearch/distribution/archives/linux-tar/build/distributions
+          key: ${{ steps.get-key.outputs.key }}
+
+      - name: Assemble OpenSearch
+        if: steps.cache-restore.outputs.cache-hit != 'true'
+        working-directory: opensearch
+        run: ./gradlew :distribution:archives:linux-tar:assemble
+
+      - name: Save cached build
+        if: steps.cache-restore.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v3
+        with:
+          path: opensearch/distribution/archives/linux-tar/build/distributions
+          key: ${{ steps.get-key.outputs.key }}
+
+      - name: Run OpenSearch
+        working-directory: opensearch/distribution/archives/linux-tar/build/distributions
+        run: |
+          tar xf opensearch-min-*
+          ./opensearch-*/bin/opensearch -d
+      
+      - name: Wait for Search server
+        run: php ./.github/wait_for_opensearch.php
+
+      - name: Integration tests
+        run: |
+          composer run integration
+        env:
+          OPENSEARCH_URL: 'http://localhost:9200'

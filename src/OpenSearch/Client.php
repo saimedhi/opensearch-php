@@ -34,7 +34,7 @@ use OpenSearch\Namespaces\DataFrameTransformDeprecatedNamespace;
 use OpenSearch\Namespaces\IndicesNamespace;
 use OpenSearch\Namespaces\IngestNamespace;
 use OpenSearch\Namespaces\KnnNamespace;
-use OpenSearch\Namespaces\MachineLearningNamespace;
+use OpenSearch\Namespaces\MlNamespace;
 use OpenSearch\Namespaces\MonitoringNamespace;
 use OpenSearch\Namespaces\NodesNamespace;
 use OpenSearch\Namespaces\NotificationsNamespace;
@@ -119,6 +119,11 @@ class Client
     protected $knn;
 
     /**
+     * @var MlNamespace
+     */
+    protected $ml;
+
+    /**
      * @var MonitoringNamespace
      */
     protected $monitoring;
@@ -183,10 +188,6 @@ class Client
      */
     protected $transforms;
 
-    /**
-     * @var MachineLearningNamespace
-     */
-    protected $ml;
 
     /**
      * Client constructor
@@ -207,6 +208,7 @@ class Client
         $this->indices = new IndicesNamespace($transport, $endpoint);
         $this->ingest = new IngestNamespace($transport, $endpoint);
         $this->knn = new KnnNamespace($transport, $endpoint);
+        $this->ml = new MlNamespace($transport, $endpoint);
         $this->monitoring = new MonitoringNamespace($transport, $endpoint);
         $this->nodes = new NodesNamespace($transport, $endpoint);
         $this->notifications = new NotificationsNamespace($transport, $endpoint);
@@ -218,7 +220,6 @@ class Client
         $this->snapshot = new SnapshotNamespace($transport, $endpoint);
         $this->sql = new SqlNamespace($transport, $endpoint);
         $this->ssl = new SslNamespace($transport, $endpoint);
-        $this->ml = new MachineLearningNamespace($transport, $endpoint);
         $this->tasks = new TasksNamespace($transport, $endpoint);
         $this->transforms = new TransformsNamespace($transport, $endpoint);
 
@@ -234,7 +235,7 @@ class Client
      * $params['_source_includes']       = (any) A comma-separated list of source fields to include in the response.
      * $params['pipeline']               = (string) ID of the pipeline to use to preprocess incoming documents.If the index has a default ingest pipeline specified, then setting the value to `_none` disables the default ingest pipeline for this request.If a final pipeline is configured it will always run, regardless of the value of this parameter.
      * $params['refresh']                = (enum) If `true`, OpenSearch refreshes the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` do nothing with refreshes.Valid values: `true`, `false`, `wait_for`. (Options = true,false,wait_for)
-     * $params['require_alias']          = (boolean) If `true`, the request’s actions must target an index alias. (Default = false)
+     * $params['require_alias']          = (boolean) If `true`, the request's actions must target an index alias. (Default = false)
      * $params['routing']                = (string) Custom value used to route operations to a specific shard.
      * $params['timeout']                = (string) Period each action waits for the following operations: automatic index creation, dynamic mapping updates, waiting for active shards.
      * $params['wait_for_active_shards'] = (any) The number of shard copies that must be active before proceeding with the operation.Set to all or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
@@ -1156,7 +1157,7 @@ class Client
      * $params['refresh']                = (boolean) If `true`, the request refreshes affected shards to make this operation visible to search.
      * $params['requests_per_second']    = (number) The throttle for this request in sub-requests per second.Defaults to no throttle. (Default = 0)
      * $params['scroll']                 = (string) Specifies how long a consistent view of the index should be maintained for scrolled search.
-     * $params['slices']                 = (any) The number of slices this task should be divided into.Defaults to 1 slice, meaning the task isn’t sliced into subtasks.
+     * $params['slices']                 = (any) The number of slices this task should be divided into.Defaults to 1 slice, meaning the task isn't sliced into subtasks.
      * $params['timeout']                = (string) Period each indexing waits for automatic index creation, dynamic mapping updates, and waiting for active shards.
      * $params['wait_for_active_shards'] = (any) The number of shard copies that must be active before proceeding with the operation.Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
      * $params['wait_for_completion']    = (boolean) If `true`, the request blocks until the operation is complete. (Default = true)
@@ -1261,7 +1262,7 @@ class Client
      * Allows to retrieve a large numbers of results from a single search request.
      *
      * $params['scroll_id']              = DEPRECATED (string) The scroll ID
-     * $params['rest_total_hits_as_int'] = (boolean) If true, the API response’s hit.total property is returned as an integer. If false, the API response’s hit.total property is returned as an object. (Default = false)
+     * $params['rest_total_hits_as_int'] = (boolean) If true, the API response's hit.total property is returned as an integer. If false, the API response's hit.total property is returned as an object. (Default = false)
      * $params['scroll']                 = (string) Period to retain the search context for scrolling.
      * $params['pretty']                 = (boolean) Whether to pretty format the returned JSON response.
      * $params['human']                  = (boolean) Whether to return human readable values for statistics.
@@ -1708,6 +1709,13 @@ class Client
         return $this->knn;
     }
     /**
+     * Returns the ml namespace
+     */
+    public function ml(): MlNamespace
+    {
+        return $this->ml;
+    }
+    /**
      * Returns the monitoring namespace
      */
     public function monitoring(): MonitoringNamespace
@@ -1797,10 +1805,6 @@ class Client
     public function transforms(): TransformsNamespace
     {
         return $this->transforms;
-    }
-    public function ml(): MachineLearningNamespace
-    {
-        return $this->ml;
     }
 
     /**
